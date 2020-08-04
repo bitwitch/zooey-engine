@@ -18,6 +18,7 @@ public:
     void createWindow();
     void update();
     void close();
+    double getTime();
 
 private:
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

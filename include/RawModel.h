@@ -1,12 +1,15 @@
 #pragma once 
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 class RawModel {
 
 public:
-    int m_vaoID;
+    GLuint m_vaoID;
     int m_vertexCount;
 
 public:
-    RawModel(int vao_id, int vertex_count);
+    RawModel(GLuint vao_id, int vertex_count);
 
 };

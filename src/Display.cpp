@@ -20,6 +20,11 @@ void Display::errorCallback(int error, const char* description)
     fprintf(stderr, "Error: %s\n", description);
 }
 
+double Display::getTime()
+{
+    return glfwGetTime();
+}
+
 void Display::createWindow() 
 {
     glfwSetErrorCallback(errorCallback);
@@ -58,6 +63,7 @@ void Display::update()
 void Display::close() 
 {
     glfwDestroyWindow(m_window);
+    glfwTerminate();
 }
 
 bool Display::windowShouldClose()
