@@ -6,7 +6,7 @@
 class RawModel {
 
 public:
-    GLuint m_vaoID;
+    GLuint m_vaoId;
     int m_vertexCount;
 
 public:

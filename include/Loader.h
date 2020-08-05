@@ -16,11 +16,12 @@ private:
 	std::vector<GLuint> vbos;
 
     GLuint createVAO();
-    void storeDataInAttributeList(int attribute_number, std::vector<float> data);
+    void storeDataInAttributeList(GLuint attribute_number, std::vector<float> data);
+    void bindIndicesBuffer(std::vector<int> indices);
     void unbindVAO();
 
 public:
-    RawModel loadToVAO(std::vector<float> positions);
+    RawModel loadToVAO(std::vector<float> positions, std::vector<int> indices);
     void cleanUp();
 
 };

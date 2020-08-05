@@ -58,6 +58,7 @@ void Display::createWindow()
 void Display::update() 
 {
     glfwSwapBuffers(m_window);
+    glfwPollEvents();
 }
 
 void Display::close() 
