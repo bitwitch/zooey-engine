@@ -1,5 +1,23 @@
 #include "Loader.h"
 
+RawModel Loader::loadToVAO(std::vector<float> positions, std::vector<int> indices) {
+    GLuint vao_id = createVAO();
+    bindIndicesBuffer(indices);
+    storeDataInAttributeList(0, positions);
+    unbindVAO();
+    return RawModel(vao_id, indices.size());
+}
+
+GLuint Loader::loadTexture(const char* filename) {
+    // load image
+    int width, height, num_channels;
+    unsigned char* data = stbi_load(filename, &width, &height, &num_channels, 0);
+    GLuint texture_id;
+    glGenTextures(1, &texture_id);
+    textures.push_back(texture_id);
+    return texture_id;
+}
+
 GLuint Loader::createVAO() {
     GLuint vao_id;
     glGenVertexArrays(1, &vao_id);
@@ -23,14 +41,6 @@ void Loader::unbindVAO() {
     glBindVertexArray(0);
 }
 
-RawModel Loader::loadToVAO(std::vector<float> positions, std::vector<int> indices) {
-    GLuint vao_id = createVAO();
-    bindIndicesBuffer(indices);
-    storeDataInAttributeList(0, positions);
-    unbindVAO();
-    return RawModel(vao_id, indices.size());
-}
-
 void Loader::bindIndicesBuffer(std::vector<int> indices) {
     GLuint vbo_id;
     size_t byte_length = sizeof(int) * indices.size();
@@ -46,5 +56,6 @@ void Loader::cleanUp() {
     // just using the ids here, is this correct?
     glDeleteVertexArrays(vaos.size(), vaos.data());
     glDeleteBuffers(vbos.size(), vbos.data());
+    glDeleteTextures(textures.size(), textures.data());
 }
 

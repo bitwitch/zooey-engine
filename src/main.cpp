@@ -6,6 +6,8 @@
 
 #include "Display.h"
 #include "Loader.h"
+#include "ModelTexture.h"
+#include "TexturedModel.h"
 #include "Renderer.h"
 #include "StaticShader.h"
 
@@ -34,12 +36,15 @@ int main(int argc, char** argv)
     
     RawModel model = loader.loadToVAO(vertices, indices);
 
+    ModelTexture texture = ModelTexture(loader.loadTexture("data/boob.jpg"));
+    TexturedModel textured_model = TexturedModel(&model, &texture);
+
     while (!display.windowShouldClose())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
         renderer.prepare();
         shader.start();
-        renderer.render(model);
+        renderer.render(&textured_model);
         shader.stop();
         display.update();
     }
