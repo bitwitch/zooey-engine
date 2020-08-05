@@ -45,9 +45,7 @@ void ShaderProgram::cleanUp()
     glDeleteShader(m_programId);
 }
 
-void ShaderProgram::bindAttributes() {
-    bindAttribute(0, "position");
-}
+void ShaderProgram::bindAttributes() {}
 
 void ShaderProgram::bindAttribute(GLuint attribute, char* variable_name) 
 {

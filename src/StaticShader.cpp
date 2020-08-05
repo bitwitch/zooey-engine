@@ -6,4 +6,5 @@ StaticShader::StaticShader() : ShaderProgram("data/vertexShader.txt", "data/frag
 
 void StaticShader::bindAttributes() {
     ShaderProgram::bindAttribute(0, "position");
+    ShaderProgram::bindAttribute(1, "tex_coords");
 }

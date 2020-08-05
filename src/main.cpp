@@ -34,7 +34,14 @@ int main(int argc, char** argv)
         3, 1, 2
     };
     
-    RawModel model = loader.loadToVAO(vertices, indices);
+    std::vector<float> tex_coords = {
+        0, 0,
+        0, 1,
+        1, 1,
+        1, 0
+    };
+
+    RawModel model = loader.loadToVAO(vertices, tex_coords, indices);
 
     ModelTexture texture = ModelTexture(loader.loadTexture("data/boob.jpg"));
     TexturedModel textured_model = TexturedModel(&model, &texture);
