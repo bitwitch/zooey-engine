@@ -5,11 +5,13 @@
 
 class RawModel {
 
-public:
+private:
     GLuint m_vaoId;
-    int m_vertexCount;
+    GLuint m_vertexCount;
 
 public:
-    RawModel(GLuint vao_id, int vertex_count);
+    RawModel(GLuint vao_id, GLuint vertex_count);
+    GLuint getVaoId();
+    GLuint getVertexCount();
 
 };

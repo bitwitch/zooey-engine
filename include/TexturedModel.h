@@ -5,12 +5,13 @@
 
 class TexturedModel {
 
-public:
-    RawModel* m_rawModel;
-    ModelTexture* m_modelTexture;
+private:
+    RawModel& m_rawModel;
+    ModelTexture& m_modelTexture;
 
 public:
-    TexturedModel(RawModel* model, ModelTexture* texture);
-
+    TexturedModel(RawModel& model, ModelTexture& texture);
+    RawModel& getRawModel();
+    ModelTexture& getTexture();
 
 };
