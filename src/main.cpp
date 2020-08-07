@@ -56,7 +56,6 @@ int main(int argc, char** argv)
         display.update();
     }
 
-    shader.cleanUp();
     loader.cleanUp();
     display.close();
 

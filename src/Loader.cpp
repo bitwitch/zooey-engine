@@ -47,7 +47,10 @@ GLuint Loader::createVAO() {
     return vao_id;
 }
 
-void Loader::storeDataInAttributeList(GLuint attribute_number, GLuint coord_size, std::vector<float> data) { 
+void Loader::storeDataInAttributeList(GLuint attribute_number, 
+                                      GLuint coord_size, 
+                                      std::vector<float> data) 
+{ 
     GLuint vbo_id;
     size_t byte_length = sizeof(float) * data.size();
     glGenBuffers(1, &vbo_id);

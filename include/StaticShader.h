@@ -5,13 +5,13 @@
 class StaticShader : public ShaderProgram 
 {
 private:
-    //TODO(shaw): figure this bullshit out
-    //char* VERTEX_FILE = "data/vertexShader.txt";
-    //char* FRAGMENT_FILE = "data/fragmentShader.txt";
+    GLuint m_locationTransformationMatrix;
 
 public:
     StaticShader();
+    void loadTransformationMatrix(glm::mat4 matrix);
 
 protected:
     void bindAttributes() override;
+    void getAllUniformLocations() override;
 };

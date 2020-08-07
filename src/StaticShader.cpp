@@ -1,10 +1,20 @@
 #include "StaticShader.h"
 
-StaticShader::StaticShader() : ShaderProgram("data/vertexShader.txt", "data/fragmentShader.txt") 
+StaticShader::StaticShader() : ShaderProgram("data/vertexShader.glsl", "data/fragmentShader.glsl") 
 { 
+    bindAttributes();
+    getAllUniformLocations();
 }
 
 void StaticShader::bindAttributes() {
-    ShaderProgram::bindAttribute(0, "position");
-    ShaderProgram::bindAttribute(1, "tex_coords");
+    bindAttribute(0, "position");
+    bindAttribute(1, "tex_coords");
+}
+
+void StaticShader::getAllUniformLocations() {
+    m_locationTransformationMatrix = getUniformLocation("transform");
+}
+
+void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
+    loadMatrix(m_locationTransformationMatrix, matrix);
 }

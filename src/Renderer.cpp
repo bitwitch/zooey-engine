@@ -17,3 +17,4 @@ void Renderer::render(TexturedModel& textured_model) {
     glDisableVertexAttribArray(1);
     glBindVertexArray(0);
 }
+
