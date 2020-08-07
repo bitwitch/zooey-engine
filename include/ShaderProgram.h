@@ -17,8 +17,8 @@ protected:
     virtual void bindAttributes() = 0;
     virtual void getAllUniformLocations() = 0;
 
-    void bindAttribute(GLuint attribute, char* variable_name);
-    GLuint getUniformLocation(char* uniformName);
+    void bindAttribute(GLuint attribute, const char* variable_name);
+    GLuint getUniformLocation(const char* uniformName);
 
     // loads uniforms into shaders
     void loadFloat(GLuint location, GLfloat value);
@@ -27,12 +27,12 @@ protected:
     void loadMatrix(GLuint location, glm::mat4 matrix);
 
 public:
-    ShaderProgram(char* vert_path, char* frag_path);
+    ShaderProgram(const char* vert_path, const char* frag_path);
     ~ShaderProgram();
     void start();
     void stop();
 
 private:
-    GLuint loadShader(char* filename, GLenum shader_type);
+    GLuint loadShader(const char* filename, GLenum shader_type);
 
 };

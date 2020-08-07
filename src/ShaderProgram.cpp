@@ -1,6 +1,6 @@
 #include "ShaderProgram.h"
 
-ShaderProgram::ShaderProgram(char* vert_path, char* frag_path) 
+ShaderProgram::ShaderProgram(const char* vert_path, const char* frag_path) 
 {
     m_vertexShaderId = loadShader(vert_path, GL_VERTEX_SHADER);
     m_fragmentShaderId = loadShader(frag_path, GL_FRAGMENT_SHADER);
@@ -44,13 +44,13 @@ ShaderProgram::~ShaderProgram()
     glDeleteProgram(m_programId);
 }
 
-void ShaderProgram::bindAttribute(GLuint attribute, char* variable_name) 
+void ShaderProgram::bindAttribute(GLuint attribute, const char* variable_name) 
 {
     const GLchar* name = (const GLchar *)variable_name;
     glBindAttribLocation(m_programId, attribute, name);
 }
 
-GLuint ShaderProgram::loadShader(char* filename, GLenum shader_type) 
+GLuint ShaderProgram::loadShader(const char* filename, GLenum shader_type) 
 {
     // read shader file into a buffer
     char *buffer = NULL;
@@ -128,7 +128,7 @@ void ShaderProgram::loadMatrix(GLuint location, glm::mat4 matrix) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-GLuint ShaderProgram::getUniformLocation(char* uniformName) {
+GLuint ShaderProgram::getUniformLocation(const char* uniformName) {
     return glGetUniformLocation(m_programId, uniformName);
 }
 
