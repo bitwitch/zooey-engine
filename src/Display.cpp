@@ -55,6 +55,14 @@ void Display::createWindow()
     // TODO(shaw): OpenGL error checks have been omitted 
 }
 
+int Display::getWidth() {
+    return m_width;
+}
+
+int Display::getHeight() {
+    return m_height;
+}
+
 void Display::update() 
 {
     glfwSwapBuffers(m_window);

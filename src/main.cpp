@@ -16,8 +16,8 @@ int main(int argc, char** argv)
     Display display = Display("Game Title");
     display.createWindow();
     Loader loader = Loader();
-    Renderer renderer = Renderer();
     StaticShader shader = StaticShader();
+    Renderer renderer = Renderer(display, shader);
 
     //double lastTime = display.getTime();
     //int nbFrames = 0;
@@ -46,13 +46,13 @@ int main(int argc, char** argv)
     ModelTexture texture = ModelTexture(loader.loadTexture("data/boob.jpg"));
     TexturedModel textured_model = TexturedModel(model, texture);
 
-    Entity entity = Entity(textured_model, glm::vec3(-1,0,0));
+    Entity entity = Entity(textured_model, glm::vec3(0,0,-1));
 
     while (!display.windowShouldClose())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
-        entity.move(0.002, 0, 0);
-        entity.rotate(0, 1, 0);
+        entity.move(0, 0, -0.01);
+        entity.rotate(0, 2, 0);
         renderer.prepare();
         shader.start();
         renderer.render(entity, shader);

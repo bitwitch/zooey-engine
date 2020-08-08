@@ -18,6 +18,8 @@ public:
     void update();
     void close();
     double getTime();
+    int getWidth();
+    int getHeight();
 
 private:
     static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

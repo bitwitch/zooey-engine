@@ -10,9 +10,18 @@
 #include "Entity.h"
 #include "StaticShader.h"
 #include "Maths.h"
+#include "Display.h"
 
 class Renderer {
+
+private:
+    constexpr static GLfloat FOV = 80;
+    constexpr static GLfloat NEAR_PLANE = 0.1f;
+    constexpr static GLfloat FAR_PLANE = 1000;
+    glm::mat4 m_projectionMatrix;
+
 public:
+    Renderer(Display& display, StaticShader& shader);
     void prepare();
     void render(Entity& entity, StaticShader& shader);
 };

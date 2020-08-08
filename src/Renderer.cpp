@@ -1,5 +1,17 @@
 #include "Renderer.h"
 
+
+Renderer::Renderer (Display& display, StaticShader& shader) {
+    m_projectionMatrix = glm::perspective(
+            FOV, 
+            (float)display.getWidth() / display.getHeight(),
+            NEAR_PLANE, 
+            FAR_PLANE);
+    shader.start();
+    shader.loadProjectionMatrix(m_projectionMatrix);
+    shader.stop();
+}
+
 void Renderer::prepare() {
     glClearColor(1, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
