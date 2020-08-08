@@ -1,4 +1,5 @@
 #include "StaticShader.h"
+#include <stdio.h>
 
 StaticShader::StaticShader() : ShaderProgram("data/vertexShader.glsl", "data/fragmentShader.glsl") 
 { 
@@ -15,6 +16,6 @@ void StaticShader::getAllUniformLocations() {
     m_locationTransformationMatrix = getUniformLocation("transform");
 }
 
-void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
+void StaticShader::loadTransformationMatrix(const glm::mat4& matrix) {
     loadMatrix(m_locationTransformationMatrix, matrix);
 }

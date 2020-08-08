@@ -9,7 +9,7 @@ private:
 
 public:
     StaticShader();
-    void loadTransformationMatrix(glm::mat4 matrix);
+    void loadTransformationMatrix(const glm::mat4& matrix);
 
 protected:
     void bindAttributes() override;

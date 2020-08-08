@@ -1,8 +1,10 @@
 #include "glm_subset.h"
 
-class Math {
+class Maths {
 
 public:
-    glm::mat4 createTransformationMatrix(glm::vec3 translation, glm::vec3 rotation, float scale);
+
+    static glm::mat4 
+    createTransformationMatrix(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale);
 
 };

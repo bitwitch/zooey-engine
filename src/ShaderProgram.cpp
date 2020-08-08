@@ -44,9 +44,7 @@ ShaderProgram::~ShaderProgram()
     glDeleteProgram(m_programId);
 }
 
-void ShaderProgram::bindAttribute(GLuint attribute, const char* variable_name) 
-{
-    const GLchar* name = (const GLchar *)variable_name;
+void ShaderProgram::bindAttribute(GLuint attribute, const char* name) {
     glBindAttribLocation(m_programId, attribute, name);
 }
 
@@ -124,7 +122,7 @@ void ShaderProgram::loadBool(GLuint location, bool value) {
     glUniform1f(location, to_load);
 }
 
-void ShaderProgram::loadMatrix(GLuint location, glm::mat4 matrix) {
+void ShaderProgram::loadMatrix(GLuint location, const glm::mat4& matrix) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 

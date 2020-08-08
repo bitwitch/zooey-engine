@@ -41,17 +41,21 @@ int main(int argc, char** argv)
         1, 0
     };
 
-    RawModel model = loader.loadToVAO(vertices, tex_coords, indices);
 
+    RawModel model = loader.loadToVAO(vertices, tex_coords, indices);
     ModelTexture texture = ModelTexture(loader.loadTexture("data/boob.jpg"));
     TexturedModel textured_model = TexturedModel(model, texture);
+
+    Entity entity = Entity(textured_model, glm::vec3(-1,0,0));
 
     while (!display.windowShouldClose())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
+        entity.move(0.002, 0, 0);
+        entity.rotate(0, 1, 0);
         renderer.prepare();
         shader.start();
-        renderer.render(textured_model);
+        renderer.render(entity, shader);
         shader.stop();
         display.update();
     }

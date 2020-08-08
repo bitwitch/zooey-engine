@@ -7,9 +7,12 @@
 #include "RawModel.h"
 #include "ModelTexture.h"
 #include "TexturedModel.h"
+#include "Entity.h"
+#include "StaticShader.h"
+#include "Maths.h"
 
 class Renderer {
 public:
     void prepare();
-    void render(TexturedModel& textured_model);
+    void render(Entity& entity, StaticShader& shader);
 };

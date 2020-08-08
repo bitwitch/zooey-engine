@@ -1,6 +1,5 @@
 #version 330
 
-in vec3 color;
 in vec2 pass_tex_coords;
 
 uniform sampler2D texture_sampler;
