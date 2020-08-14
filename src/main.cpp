@@ -41,7 +41,6 @@ int main(int argc, char** argv)
         1, 0
     };
 
-
     RawModel model = loader.loadToVAO(vertices, tex_coords, indices);
     ModelTexture texture = ModelTexture(loader.loadTexture("data/boob.jpg"));
     TexturedModel textured_model = TexturedModel(model, texture);
@@ -53,10 +52,8 @@ int main(int argc, char** argv)
         //logSecondsPerFrame(lastTime, nbFrames);
         entity.move(0, 0, -0.01);
         entity.rotate(0, 2, 0);
-        renderer.prepare();
-        shader.start();
+        renderer.clear();
         renderer.render(entity, shader);
-        shader.stop();
         display.update();
     }
 

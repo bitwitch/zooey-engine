@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "RawModel.h"
 #include "ModelTexture.h"
@@ -19,9 +20,10 @@ private:
     constexpr static GLfloat NEAR_PLANE = 0.1f;
     constexpr static GLfloat FAR_PLANE = 1000;
     glm::mat4 m_projectionMatrix;
+    void createProjectionMatrix(int width, int height);
 
 public:
     Renderer(Display& display, StaticShader& shader);
-    void prepare();
+    void clear();
     void render(Entity& entity, StaticShader& shader);
 };
