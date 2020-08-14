@@ -9,13 +9,12 @@ Renderer::Renderer (Display& display, StaticShader& shader) {
 }
 
 void Renderer::clear() {
-    glClearColor(1, 0, 0, 1);
+    glEnable(GL_DEPTH_TEST);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::render(Entity& entity, StaticShader& shader) {
-    shader.start();
-
     TexturedModel& textured_model = entity.getModel();
     RawModel& raw_model = textured_model.getRawModel();
     glBindVertexArray(raw_model.getVaoId());
@@ -33,13 +32,11 @@ void Renderer::render(Entity& entity, StaticShader& shader) {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glBindVertexArray(0);
-
-    shader.stop();
 }
 
 void Renderer::createProjectionMatrix(int width, int height) {
     float aspect = (float)width / (float)height;
-    float y_scale = (float)((1.0f / tan(0.5f * FOV * M_PI / 180.0f)) * aspect);
+    float y_scale = (float)((1.0f / tan(glm::radians(0.5f * FOV))) * aspect);
     float x_scale = y_scale / aspect;
     float frustum_length = FAR_PLANE - NEAR_PLANE;
 
