@@ -18,12 +18,12 @@ private:
     GLuint createVAO();
     void storeDataInAttributeList(GLuint attribute_number, GLuint coord_size, 
             std::vector<float> data);
-    void bindIndicesBuffer(std::vector<int> indices);
+    void bindIndicesBuffer(std::vector<GLuint> indices);
     void unbindVAO();
 
 public:
-    RawModel loadToVAO(std::vector<float> positions, std::vector<float> tex_coords, 
-            std::vector<int> indices);
+    RawModel loadToVAO(std::vector<GLfloat> positions, std::vector<GLfloat> tex_coords, 
+            std::vector<GLuint> indices);
     GLuint loadTexture(const char* filename);
     void cleanUp();
 

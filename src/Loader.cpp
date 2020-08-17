@@ -1,8 +1,9 @@
 #include "Loader.h"
 
-RawModel Loader::loadToVAO(std::vector<float> positions, 
-                           std::vector<float> tex_coords, 
-                           std::vector<int> indices) 
+// TODO(shaw): take in normals 
+RawModel Loader::loadToVAO(std::vector<GLfloat> positions, 
+                           std::vector<GLfloat> tex_coords, 
+                           std::vector<GLuint> indices) 
 {
     GLuint vao_id = createVAO();
     bindIndicesBuffer(indices);
@@ -26,12 +27,20 @@ GLuint Loader::loadTexture(const char* filename)
     // load image
     int width, height, num_channels;
     unsigned char* data = stbi_load(filename, &width, &height, &num_channels, 0);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    } else {
+
+    if (!data) {
         printf("Failed to load texture\n");
+        data = stbi_load("data/source_fail.png", &width, &height, &num_channels, 0);
     }
+
+    GLenum pixel_format = GL_RGB;
+    if (num_channels == 4) {
+        pixel_format = GL_RGBA;
+    }
+
+    glTexImage2D(GL_TEXTURE_2D, 0, pixel_format, width, height, 0, pixel_format, GL_UNSIGNED_BYTE, 
+            data);
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(data);
 
@@ -65,9 +74,9 @@ void Loader::unbindVAO() {
     glBindVertexArray(0);
 }
 
-void Loader::bindIndicesBuffer(std::vector<int> indices) {
+void Loader::bindIndicesBuffer(std::vector<GLuint> indices) {
     GLuint vbo_id;
-    size_t byte_length = sizeof(int) * indices.size();
+    size_t byte_length = sizeof(GLuint) * indices.size();
     glGenBuffers(1, &vbo_id);
     vbos.push_back(vbo_id);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_id);
