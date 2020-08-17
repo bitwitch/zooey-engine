@@ -10,7 +10,8 @@ Renderer::Renderer (Display& display, StaticShader& shader) {
 
 void Renderer::clear() {
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0, 0, 0, 1);
+    //glClearColor(0, 0, 0, 1);
+    glClearColor(59/255.0f, 0/255.0f, 0/255.0f, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
@@ -20,6 +21,7 @@ void Renderer::render(Entity& entity, StaticShader& shader) {
     glBindVertexArray(raw_model.getVaoId());
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     glm::mat4 transformation_matrix = Maths::createTransformationMatrix(
             entity.getPosition(), entity.getRotation(), entity.getScale());
@@ -31,6 +33,7 @@ void Renderer::render(Entity& entity, StaticShader& shader) {
     glDrawElements(GL_TRIANGLES, raw_model.getVertexCount(), GL_UNSIGNED_INT, 0);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
     glBindVertexArray(0);
 }
 

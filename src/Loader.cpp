@@ -1,14 +1,15 @@
 #include "Loader.h"
 
-// TODO(shaw): take in normals 
 RawModel Loader::loadToVAO(std::vector<GLfloat> positions, 
                            std::vector<GLfloat> tex_coords, 
+                           std::vector<GLfloat> normals, 
                            std::vector<GLuint> indices) 
 {
     GLuint vao_id = createVAO();
     bindIndicesBuffer(indices);
     storeDataInAttributeList(0, 3, positions);
     storeDataInAttributeList(1, 2, tex_coords);
+    storeDataInAttributeList(2, 3, normals);
     unbindVAO();
     return RawModel(vao_id, indices.size());
 }

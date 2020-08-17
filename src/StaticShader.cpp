@@ -9,12 +9,15 @@ StaticShader::StaticShader() : ShaderProgram("data/vertexShader.glsl", "data/fra
 void StaticShader::bindAttributes() {
     bindAttribute(0, "position");
     bindAttribute(1, "tex_coords");
+    bindAttribute(2, "normal");
 }
 
 void StaticShader::getAllUniformLocations() {
     m_locationTransformationMatrix = getUniformLocation("transform");
     m_locationProjectionMatrix = getUniformLocation("projection");
     m_locationViewMatrix = getUniformLocation("view");
+    m_locationLightPosition = getUniformLocation("light_position");
+    m_locationLightColor = getUniformLocation("light_color");
 }
 
 void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
@@ -28,4 +31,9 @@ void StaticShader::loadProjectionMatrix(glm::mat4 matrix) {
 void StaticShader::loadViewMatrix(Camera& camera) {
     glm::mat4 view_matrix = Maths::createViewMatrix(camera);
     loadMatrix(m_locationViewMatrix, view_matrix);
+}
+
+void StaticShader::loadLight(Light& light) {
+    loadVector(m_locationLightPosition, light.getPosition());
+    loadVector(m_locationLightColor, light.getColor());
 }

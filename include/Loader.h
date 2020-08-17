@@ -23,7 +23,7 @@ private:
 
 public:
     RawModel loadToVAO(std::vector<GLfloat> positions, std::vector<GLfloat> tex_coords, 
-            std::vector<GLuint> indices);
+            std::vector<GLfloat> normals, std::vector<GLuint> indices);
     GLuint loadTexture(const char* filename);
     void cleanUp();
 

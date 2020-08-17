@@ -110,7 +110,6 @@ RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
             indices_array.push_back(index_number++);
     }
 
-    // TODO(shaw): add normals once function can handle them
-    return loader.loadToVAO(vertices_array, texture_coords_array, indices_array);
+    return loader.loadToVAO(vertices_array, texture_coords_array, normals_array, indices_array);
 }
 

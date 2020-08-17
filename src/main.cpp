@@ -11,6 +11,7 @@
 #include "Renderer.h"
 #include "StaticShader.h"
 #include "OBJLoader.h"
+#include "Light.h"
 
 int main(int argc, char** argv) 
 {
@@ -23,12 +24,14 @@ int main(int argc, char** argv)
     //double lastTime = display.getTime();
     //int nbFrames = 0;
 
-    RawModel obj_model = OBJLoader::loadObjModel("stall", loader);
-    ModelTexture obj_texture = ModelTexture(loader.loadTexture("data/stall_texture.png"));
+    RawModel obj_model = OBJLoader::loadObjModel("dragon", loader);
+    ModelTexture obj_texture = ModelTexture(loader.loadTexture("data/cream.png"));
     TexturedModel obj_textured_model = TexturedModel(obj_model, obj_texture);
-    Entity obj_entity = Entity(obj_textured_model, glm::vec3(0,0,-30));
+    Entity obj_entity = Entity(obj_textured_model, glm::vec3(0,-5,-30));
 
-    Camera camera = Camera();
+    Light light = Light(glm::vec3(0,0,-25), glm::vec3(1,1,1));
+
+    Camera camera = Camera(display.getWindow());
 
     while (!display.windowShouldClose())
     {
@@ -41,6 +44,7 @@ int main(int argc, char** argv)
 
         shader.start();
         shader.loadViewMatrix(camera);
+        shader.loadLight(light);
         renderer.clear();
         renderer.render(obj_entity, shader);
         shader.stop();

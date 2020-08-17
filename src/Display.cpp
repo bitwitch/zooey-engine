@@ -64,6 +64,10 @@ int Display::getHeight() {
     return m_height;
 }
 
+GLFWwindow* Display::getWindow() {
+    return m_window;
+}
+
 void Display::update() 
 {
     glfwSwapBuffers(m_window);
