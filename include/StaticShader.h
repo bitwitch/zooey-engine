@@ -13,6 +13,8 @@ private:
     GLuint m_locationViewMatrix;
     GLuint m_locationLightPosition;
     GLuint m_locationLightColor;
+    GLfloat m_locationShineDamper;
+    GLfloat m_locationReflectivity;
 
 public:
     StaticShader();
@@ -20,6 +22,7 @@ public:
     void loadProjectionMatrix(glm::mat4 matrix);
     void loadViewMatrix(Camera& camera);
     void loadLight(Light& light);
+    void loadShineVariables(GLfloat damper, GLfloat reflectivity);
 
 protected:
     void bindAttributes() override;

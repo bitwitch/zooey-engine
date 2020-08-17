@@ -7,6 +7,7 @@ layout (location = 2) in vec3 normal;
 out vec2 pass_tex_coords;
 out vec3 surface_normal;
 out vec3 to_light;
+out vec3 to_camera;
 
 uniform mat4 transform;
 uniform mat4 projection;
@@ -20,4 +21,7 @@ void main(void) {
 
   surface_normal = (transform * vec4(normal, 0.0)).xyz;
   to_light = light_position - world_position.xyz;
+
+
+  to_camera = (inverse(view) * vec4(0.0,0.0,0.0,1.0)).xyz - world_position.xyz;
 }

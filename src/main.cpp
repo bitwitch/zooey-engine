@@ -24,12 +24,15 @@ int main(int argc, char** argv)
     //double lastTime = display.getTime();
     //int nbFrames = 0;
 
-    RawModel obj_model = OBJLoader::loadObjModel("dragon", loader);
-    ModelTexture obj_texture = ModelTexture(loader.loadTexture("data/cream.png"));
-    TexturedModel obj_textured_model = TexturedModel(obj_model, obj_texture);
-    Entity obj_entity = Entity(obj_textured_model, glm::vec3(0,-5,-30));
+    RawModel model = OBJLoader::loadObjModel("dragon", loader);
+    ModelTexture texture = ModelTexture(loader.loadTexture("data/cream.png"));
+    TexturedModel textured_model = TexturedModel(model, texture);
+    texture.setShineDamper(10);
+    texture.setReflectivity(1);
 
-    Light light = Light(glm::vec3(0,0,-25), glm::vec3(1,1,1));
+    Entity entity = Entity(textured_model, glm::vec3(0,-5,-30));
+
+    Light light = Light(glm::vec3(200,200,100), glm::vec3(1,1,1));
 
     Camera camera = Camera(display.getWindow());
 
@@ -38,7 +41,7 @@ int main(int argc, char** argv)
         //logSecondsPerFrame(lastTime, nbFrames);
         //entity.move(0, 0, -0.01);
         //
-        obj_entity.rotate(0, 1, 0);
+        entity.rotate(0, 1, 0);
 
         camera.move();
 
@@ -46,7 +49,7 @@ int main(int argc, char** argv)
         shader.loadViewMatrix(camera);
         shader.loadLight(light);
         renderer.clear();
-        renderer.render(obj_entity, shader);
+        renderer.render(entity, shader);
         shader.stop();
         display.update();
     }

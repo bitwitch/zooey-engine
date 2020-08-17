@@ -25,8 +25,10 @@ void Renderer::render(Entity& entity, StaticShader& shader) {
 
     glm::mat4 transformation_matrix = Maths::createTransformationMatrix(
             entity.getPosition(), entity.getRotation(), entity.getScale());
-
     shader.loadTransformationMatrix(transformation_matrix);
+
+    ModelTexture& texture = textured_model.getTexture();
+    shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textured_model.getTexture().getId());
