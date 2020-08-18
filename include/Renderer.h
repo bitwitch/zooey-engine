@@ -4,6 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <math.h>
+#include <vector>
+#include <map>
+
 
 #include "RawModel.h"
 #include "ModelTexture.h"
@@ -16,14 +19,20 @@
 class Renderer {
 
 private:
+    glm::mat4 m_projectionMatrix;
+    StaticShader& m_shader;
+
     constexpr static GLfloat FOV = 80;
     constexpr static GLfloat NEAR_PLANE = 0.1f;
     constexpr static GLfloat FAR_PLANE = 1000;
-    glm::mat4 m_projectionMatrix;
+
     void createProjectionMatrix(int width, int height);
+    void prepareTexturedModel(TexturedModel& model);
+    void unbindTexturedModel();
+    void prepareInstance(Entity& entity);
 
 public:
     Renderer(Display& display, StaticShader& shader);
+    void render(std::map<TexturedModel*, std::vector<Entity*>>& entities);
     void clear();
-    void render(Entity& entity, StaticShader& shader);
 };
