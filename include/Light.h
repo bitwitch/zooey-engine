@@ -5,8 +5,8 @@
 class Light {
 
 private:
-    glm::vec3 m_position;
-    glm::vec3 m_color;
+    glm::vec3 position;
+    glm::vec3 color;
 
 public:
     Light(glm::vec3 position, glm::vec3 color);

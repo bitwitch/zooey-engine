@@ -26,16 +26,16 @@ GLuint Loader::loadTexture(const char* filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // load image
-    int width, height, num_channels;
-    unsigned char* data = stbi_load(filename, &width, &height, &num_channels, 0);
+    int width, height, nuchannels;
+    unsigned char* data = stbi_load(filename, &width, &height, &nuchannels, 0);
 
     if (!data) {
         printf("Failed to load texture\n");
-        data = stbi_load("data/source_fail.png", &width, &height, &num_channels, 0);
+        data = stbi_load("data/source_fail.png", &width, &height, &nuchannels, 0);
     }
 
     GLenum pixel_format = GL_RGB;
-    if (num_channels == 4) {
+    if (nuchannels == 4) {
         pixel_format = GL_RGBA;
     }
 

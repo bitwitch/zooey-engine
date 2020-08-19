@@ -19,8 +19,8 @@
 class Renderer {
 
 private:
-    glm::mat4 m_projectionMatrix;
-    StaticShader& m_shader;
+    glm::mat4 projection_matrix;
+    StaticShader& shader;
 
     constexpr static GLfloat FOV = 80;
     constexpr static GLfloat NEAR_PLANE = 0.1f;

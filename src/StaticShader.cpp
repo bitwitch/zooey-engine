@@ -13,34 +13,34 @@ void StaticShader::bindAttributes() {
 }
 
 void StaticShader::getAllUniformLocations() {
-    m_locationTransformationMatrix = getUniformLocation("transform");
-    m_locationProjectionMatrix = getUniformLocation("projection");
-    m_locationViewMatrix = getUniformLocation("view");
-    m_locationLightPosition = getUniformLocation("light_position");
-    m_locationLightColor = getUniformLocation("light_color");
-    m_locationShineDamper = getUniformLocation("shine_damper");
-    m_locationReflectivity = getUniformLocation("reflectivity");
+    location_transformation_matrix = getUniformLocation("transform");
+    location_projection_matrix = getUniformLocation("projection");
+    location_view_matrix = getUniformLocation("view");
+    location_light_position = getUniformLocation("light_position");
+    location_light_color = getUniformLocation("light_color");
+    location_shine_damper = getUniformLocation("shine_damper");
+    location_reflectivity = getUniformLocation("reflectivity");
 }
 
 void StaticShader::loadTransformationMatrix(glm::mat4 matrix) {
-    loadMatrix(m_locationTransformationMatrix, matrix);
+    loadMatrix(location_transformation_matrix, matrix);
 }
 
 void StaticShader::loadProjectionMatrix(glm::mat4 matrix) {
-    loadMatrix(m_locationProjectionMatrix, matrix);
+    loadMatrix(location_projection_matrix, matrix);
 }
 
 void StaticShader::loadViewMatrix(Camera& camera) {
     glm::mat4 view_matrix = Maths::createViewMatrix(camera);
-    loadMatrix(m_locationViewMatrix, view_matrix);
+    loadMatrix(location_view_matrix, view_matrix);
 }
 
 void StaticShader::loadLight(Light& light) {
-    loadVector(m_locationLightPosition, light.getPosition());
-    loadVector(m_locationLightColor, light.getColor());
+    loadVector(location_light_position, light.getPosition());
+    loadVector(location_light_color, light.getColor());
 }
 
 void StaticShader::loadShineVariables(GLfloat damper, GLfloat reflectivity) {
-    loadFloat(m_locationShineDamper, damper);
-    loadFloat(m_locationReflectivity, reflectivity);
+    loadFloat(location_shine_damper, damper);
+    loadFloat(location_reflectivity, reflectivity);
 }

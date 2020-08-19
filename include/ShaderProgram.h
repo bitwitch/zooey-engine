@@ -9,9 +9,9 @@
 class ShaderProgram {
 
 private:
-    GLuint m_programId;
-    GLuint m_vertexShaderId;
-    GLuint m_fragmentShaderId;
+    GLuint program_id;
+    GLuint vertex_shader_id;
+    GLuint fragment_shader_id;
 
 protected:
     virtual void bindAttributes() = 0;

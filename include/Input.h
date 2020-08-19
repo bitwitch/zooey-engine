@@ -15,7 +15,7 @@
 //class Input {
 
 //private:
-    //std::map<> m_keyBindings;
+    //std::map<> keyBindings;
 
 
 //public:

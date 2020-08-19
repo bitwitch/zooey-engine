@@ -2,23 +2,23 @@
 
 ShaderProgram::ShaderProgram(const char* vert_path, const char* frag_path) 
 {
-    m_vertexShaderId = loadShader(vert_path, GL_VERTEX_SHADER);
-    m_fragmentShaderId = loadShader(frag_path, GL_FRAGMENT_SHADER);
-    m_programId = glCreateProgram();
-    glAttachShader(m_programId, m_vertexShaderId);
-    glAttachShader(m_programId, m_fragmentShaderId);
-    glLinkProgram(m_programId);
-    glValidateProgram(m_programId);
+    vertex_shader_id = loadShader(vert_path, GL_VERTEX_SHADER);
+    fragment_shader_id = loadShader(frag_path, GL_FRAGMENT_SHADER);
+    program_id = glCreateProgram();
+    glAttachShader(program_id, vertex_shader_id);
+    glAttachShader(program_id, fragment_shader_id);
+    glLinkProgram(program_id);
+    glValidateProgram(program_id);
 
 	GLint status;
-	glGetProgramiv (m_programId, GL_LINK_STATUS, &status);
+	glGetProgramiv (program_id, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE)
 	{
 		GLint length_info_log;
-		glGetProgramiv(m_programId, GL_INFO_LOG_LENGTH, &length_info_log);
+		glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &length_info_log);
 
 		GLchar *info_log = new GLchar[length_info_log + 1];
-		glGetProgramInfoLog(m_programId, length_info_log, NULL, info_log);
+		glGetProgramInfoLog(program_id, length_info_log, NULL, info_log);
 		fprintf(stderr, "Linker failure: %s\n", info_log);
 		delete[] info_log;
 	}
@@ -26,7 +26,7 @@ ShaderProgram::ShaderProgram(const char* vert_path, const char* frag_path)
 
 void ShaderProgram::start() 
 {
-    glUseProgram(m_programId);
+    glUseProgram(program_id);
 }
 
 void ShaderProgram::stop() 
@@ -37,15 +37,15 @@ void ShaderProgram::stop()
 ShaderProgram::~ShaderProgram()
 {
     stop();
-    glDetachShader(m_programId, m_vertexShaderId);
-    glDetachShader(m_programId, m_fragmentShaderId);
-    glDeleteShader(m_vertexShaderId);
-    glDeleteShader(m_fragmentShaderId);
-    glDeleteProgram(m_programId);
+    glDetachShader(program_id, vertex_shader_id);
+    glDetachShader(program_id, fragment_shader_id);
+    glDeleteShader(vertex_shader_id);
+    glDeleteShader(fragment_shader_id);
+    glDeleteProgram(program_id);
 }
 
 void ShaderProgram::bindAttribute(GLuint attribute, const char* name) {
-    glBindAttribLocation(m_programId, attribute, name);
+    glBindAttribLocation(program_id, attribute, name);
 }
 
 GLuint ShaderProgram::loadShader(const char* filename, GLenum shader_type) 
@@ -127,6 +127,6 @@ void ShaderProgram::loadMatrix(GLuint location, const glm::mat4& matrix) {
 }
 
 GLuint ShaderProgram::getUniformLocation(const char* uniformName) {
-    return glGetUniformLocation(m_programId, uniformName);
+    return glGetUniformLocation(program_id, uniformName);
 }
 

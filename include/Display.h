@@ -5,11 +5,11 @@
 class Display {
 
 private:
-    int m_width;
-    int m_height;
-    int m_fpsCap;
-    const char* m_title;
-    GLFWwindow* m_window;
+    int width;
+    int height;
+    int fps_cap;
+    const char* title;
+    GLFWwindow* window;
 
 public:
     Display(const char* title, int width=1280, int height=720, int fps_cap=60);

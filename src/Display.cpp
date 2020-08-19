@@ -3,10 +3,10 @@
 #include "Display.h"
 
 Display::Display(const char* title, int width, int height, int fps_cap) {
-    m_title = title;
-    m_width = width;
-    m_height = height;
-    m_fpsCap = fps_cap;
+    this->title = title;
+    this->width = width;
+    this->height = height;
+    this->fps_cap = fps_cap;
 }
 
 void Display::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -38,16 +38,16 @@ void Display::createWindow()
     glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE ); 
 
-    m_window = glfwCreateWindow(m_width, m_height, m_title, NULL, NULL);
-    if (!m_window)
+    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    if (!window)
     {
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
 
-    glfwSetKeyCallback(m_window, keyCallback);
+    glfwSetKeyCallback(window, keyCallback);
 
-    glfwMakeContextCurrent(m_window);
+    glfwMakeContextCurrent(window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     glfwSwapInterval(1);
 
@@ -57,30 +57,30 @@ void Display::createWindow()
 }
 
 int Display::getWidth() {
-    return m_width;
+    return width;
 }
 
 int Display::getHeight() {
-    return m_height;
+    return height;
 }
 
 GLFWwindow* Display::getWindow() {
-    return m_window;
+    return window;
 }
 
 void Display::update() 
 {
-    glfwSwapBuffers(m_window);
+    glfwSwapBuffers(window);
     glfwPollEvents();
 }
 
 void Display::close() 
 {
-    glfwDestroyWindow(m_window);
+    glfwDestroyWindow(window);
     glfwTerminate();
 }
 
 bool Display::windowShouldClose()
 {
-    return glfwWindowShouldClose(m_window);
+    return glfwWindowShouldClose(window);
 }

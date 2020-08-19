@@ -12,9 +12,9 @@
 class MasterRenderer {
 
 private:
-    StaticShader m_shader;
-    Renderer m_renderer;
-    std::map<TexturedModel*, std::vector<Entity*>> m_entities;
+    StaticShader shader;
+    Renderer renderer;
+    std::map<TexturedModel*, std::vector<Entity*>> entities;
 
 public:
     MasterRenderer(Display& display);

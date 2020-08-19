@@ -1,20 +1,20 @@
 #include "Light.h"
 
-Light::Light(glm::vec3 position, glm::vec3 color) : m_position(position), m_color(color) {}
+Light::Light(glm::vec3 position, glm::vec3 color) : position(position), color(color) {}
 
 glm::vec3 Light::getPosition() {
-    return m_position;
+    return position;
 }
 
 glm::vec3 Light::getColor() {
-    return m_color;
+    return color;
 }
 
 void Light::setPosition(glm::vec3 position) {
-    m_position = position;
+    this->position = position;
 }
 
 void Light::setColor(glm::vec3 color) {
-    m_color = color;
+    this->color = color;
 }
 

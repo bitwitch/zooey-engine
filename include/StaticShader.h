@@ -8,13 +8,13 @@
 class StaticShader : public ShaderProgram 
 {
 private:
-    GLuint m_locationTransformationMatrix;
-    GLuint m_locationProjectionMatrix;
-    GLuint m_locationViewMatrix;
-    GLuint m_locationLightPosition;
-    GLuint m_locationLightColor;
-    GLfloat m_locationShineDamper;
-    GLfloat m_locationReflectivity;
+    GLuint location_transformation_matrix;
+    GLuint location_projection_matrix;
+    GLuint location_view_matrix;
+    GLuint location_light_position;
+    GLuint location_light_color;
+    GLfloat location_shine_damper;
+    GLfloat location_reflectivity;
 
 public:
     StaticShader();

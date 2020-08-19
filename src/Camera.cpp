@@ -1,23 +1,23 @@
 #include "Camera.h"
 
-Camera::Camera(GLFWwindow* window) : m_window(window) {}
+Camera::Camera(GLFWwindow* window) : window(window) {}
 
 void Camera::move() {
-    if (glfwGetKey(m_window, GLFW_KEY_W))
-        m_position.z -= 1.0f;
-    if (glfwGetKey(m_window, GLFW_KEY_A))
-        m_position.x -= 1.0f;
-    if (glfwGetKey(m_window, GLFW_KEY_S))
-        m_position.z += 1.0f;
-    if (glfwGetKey(m_window, GLFW_KEY_D))
-        m_position.x += 1.0f;
+    if (glfwGetKey(window, GLFW_KEY_W))
+        position.z -= 1.0f;
+    if (glfwGetKey(window, GLFW_KEY_A))
+        position.x -= 1.0f;
+    if (glfwGetKey(window, GLFW_KEY_S))
+        position.z += 1.0f;
+    if (glfwGetKey(window, GLFW_KEY_D))
+        position.x += 1.0f;
 }
 
 glm::vec3 Camera::getRotation() {
-    return m_rotation;
+    return rotation;
 }
 
 glm::vec3 Camera::getPosition() {
-    return m_position;
+    return position;
 }
 

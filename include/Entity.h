@@ -4,10 +4,10 @@
 class Entity {
 
 private:
-    TexturedModel& m_model;
-    glm::vec3 m_position;
-    glm::vec3 m_rotation;
-    glm::vec3 m_scale;
+    TexturedModel& model;
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 _scale;
 
 public:
     Entity(TexturedModel& model, glm::vec3 position = { 0, 0, 0 }, 

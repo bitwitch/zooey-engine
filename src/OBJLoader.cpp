@@ -84,13 +84,13 @@ RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
     //
     int ids[3]; // ids = [ v_id, vt_id, vn_id ]
     int i, index_number = 0;
-    std::string num_str;
+    std::string nustr;
     for (const auto& face: faces) {
         std::istringstream ss(face);
 
         i = 0;
-        while(std::getline(ss, num_str, '/'))
-            ids[i++] = std::stoi(num_str);
+        while(std::getline(ss, nustr, '/'))
+            ids[i++] = std::stoi(nustr);
 
         glm::vec3 current_vertex = vertices.at(ids[0] - 1);
         vertices_array.push_back(current_vertex.x);

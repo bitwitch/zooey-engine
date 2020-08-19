@@ -1,39 +1,39 @@
 #include "Entity.h"
 
 Entity::Entity(TexturedModel& model, glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) :
-    m_model(model), m_position(position), m_rotation(rotation), m_scale(scale) { }
+    model(model), position(position), rotation(rotation), _scale(scale) { }
 
 TexturedModel& Entity::getModel() {
-    return m_model;
+    return model;
 }
 
 glm::vec3 Entity::getPosition() {
-    return m_position;
+    return position;
 }
 
 glm::vec3 Entity::getRotation() {
-    return m_rotation;
+    return rotation;
 }
 
 glm::vec3 Entity::getScale() {
-    return m_scale;
+    return _scale;
 }
 
 void Entity::move(float dx, float dy, float dz) {
-    m_position.x += dx;
-    m_position.y += dy;
-    m_position.z += dz;
+    position.x += dx;
+    position.y += dy;
+    position.z += dz;
 }
 
 void Entity::rotate(float dx, float dy, float dz) {
-    m_rotation.x += dx;
-    m_rotation.y += dy;
-    m_rotation.z += dz;
+    rotation.x += dx;
+    rotation.y += dy;
+    rotation.z += dz;
 }
 
 void Entity::scale(float dx, float dy, float dz) {
-    m_scale.x += dx;
-    m_scale.y += dy;
-    m_scale.z += dz;
+    _scale.x += dx;
+    _scale.y += dy;
+    _scale.z += dz;
 }
 

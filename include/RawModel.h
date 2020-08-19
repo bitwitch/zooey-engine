@@ -6,8 +6,8 @@
 class RawModel {
 
 private:
-    GLuint m_vaoId;
-    GLuint m_vertexCount;
+    GLuint vao_id;
+    GLuint vertex_count;
 
 public:
     RawModel(GLuint vao_id, GLuint vertex_count);

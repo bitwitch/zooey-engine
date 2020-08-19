@@ -1,11 +1,11 @@
 #include "Renderer.h"
 
-Renderer::Renderer (Display& display, StaticShader& shader) : m_shader(shader) {
+Renderer::Renderer (Display& display, StaticShader& shader) : shader(shader) {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     createProjectionMatrix(display.getWidth(), display.getHeight());
     shader.start();
-    shader.loadProjectionMatrix(m_projectionMatrix);
+    shader.loadProjectionMatrix(projection_matrix);
     shader.stop();
 }
 
@@ -23,7 +23,7 @@ void Renderer::prepareTexturedModel(TexturedModel& model) {
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
     ModelTexture& texture = model.getTexture();
-    m_shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
+    shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());
 }
@@ -38,7 +38,7 @@ void Renderer::unbindTexturedModel() {
 void Renderer::prepareInstance(Entity& entity) {
     glm::mat4 transformation_matrix = Maths::createTransformationMatrix(
             entity.getPosition(), entity.getRotation(), entity.getScale());
-    m_shader.loadTransformationMatrix(transformation_matrix);
+    shader.loadTransformationMatrix(transformation_matrix);
 }
 
 void Renderer::render(std::map<TexturedModel*, std::vector<Entity*>>& entities) {
@@ -58,10 +58,10 @@ void Renderer::createProjectionMatrix(int width, int height) {
     float aspect = (float)width / (float)height;
     float y_scale = (float)((1.0f / tan(glm::radians(0.5f * FOV))) * aspect);
     float x_scale = y_scale / aspect;
-    float frustum_length = FAR_PLANE - NEAR_PLANE;
+    float frustulength = FAR_PLANE - NEAR_PLANE;
 
-    m_projectionMatrix[0] = glm::vec4(x_scale, 0, 0, 0);
-    m_projectionMatrix[1] = glm::vec4(0, y_scale, 0, 0);
-    m_projectionMatrix[2] = glm::vec4(0, 0, -(FAR_PLANE + NEAR_PLANE)/frustum_length, -1);
-    m_projectionMatrix[3] = glm::vec4(0, 0, -(2 * NEAR_PLANE * FAR_PLANE)/frustum_length, 0);
+    projection_matrix[0] = glm::vec4(x_scale, 0, 0, 0);
+    projection_matrix[1] = glm::vec4(0, y_scale, 0, 0);
+    projection_matrix[2] = glm::vec4(0, 0, -(FAR_PLANE + NEAR_PLANE)/frustulength, -1);
+    projection_matrix[3] = glm::vec4(0, 0, -(2 * NEAR_PLANE * FAR_PLANE)/frustulength, 0);
 }

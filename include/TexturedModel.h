@@ -6,8 +6,8 @@
 class TexturedModel {
 
 private:
-    RawModel& m_rawModel;
-    ModelTexture& m_modelTexture;
+    RawModel& raw_model;
+    ModelTexture& model_texture;
 
 public:
     TexturedModel(RawModel& model, ModelTexture& texture);

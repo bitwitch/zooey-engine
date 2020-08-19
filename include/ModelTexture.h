@@ -5,9 +5,9 @@
 class ModelTexture {
 
 private:
-    GLuint m_textureId;
-    GLfloat m_shineDamper;
-    GLfloat m_reflectivity;
+    GLuint texture_id;
+    GLfloat shine_damper;
+    GLfloat reflectivity;
 
 public:
     ModelTexture(GLuint id);

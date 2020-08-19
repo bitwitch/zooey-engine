@@ -1,27 +1,27 @@
 #include "ModelTexture.h"
 
 ModelTexture::ModelTexture(GLuint id) {
-    m_textureId = id;
+    texture_id = id;
 }
 
 GLuint ModelTexture::getId() {
-    return m_textureId;
+    return texture_id;
 }
 
 GLfloat ModelTexture::getShineDamper() {
-    return m_shineDamper;
+    return shine_damper;
 }
 
 GLfloat ModelTexture::getReflectivity() {
-    return m_reflectivity;
+    return reflectivity;
 }
 
 void ModelTexture::setReflectivity(GLfloat reflectivity) {
-    m_reflectivity = reflectivity;
+    this->reflectivity = reflectivity;
 }
 
 void ModelTexture::setShineDamper(GLfloat damper) {
-    m_shineDamper = damper;
+    shine_damper = damper;
 }
 
 
