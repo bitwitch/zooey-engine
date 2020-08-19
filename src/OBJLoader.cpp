@@ -30,7 +30,7 @@ RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
 
     // Attempt to read file, if error occurs it returns a nullptr
     try {
-        obj_file.open("data/" + filename + ".obj");
+        obj_file.open("data/models/" + filename + ".obj");
         obj << obj_file.rdbuf();
         obj_file.close();
 

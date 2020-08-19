@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     //int nbFrames = 0;
 
     //RawModel model = OBJLoader::loadObjModel("dragon", loader);
-    //ModelTexture texture = ModelTexture(loader.loadTexture("data/cream.png"));
+    //ModelTexture texture = ModelTexture(loader.loadTexture("cream.png"));
     //TexturedModel textured_model = TexturedModel(model, texture);
     //texture.setShineDamper(10);
     //texture.setReflectivity(1);
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
     Camera camera = Camera(display.getWindow());
 
     RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
-    ModelTexture cube_texture = ModelTexture(loader.loadTexture("data/grass_block.png"));
+    ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
     cube_texture.setShineDamper(10);
     cube_texture.setReflectivity(0.2);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);

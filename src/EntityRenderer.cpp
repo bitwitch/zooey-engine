@@ -1,22 +1,14 @@
-#include "Renderer.h"
+#include "EntityRenderer.h"
 
-Renderer::Renderer (Display& display, StaticShader& shader) : shader(shader) {
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    createProjectionMatrix(display.getWidth(), display.getHeight());
+EntityRenderer::EntityRenderer (StaticShader& shader, glm::mat4 projection_matrix) 
+    : shader(shader) 
+{
     shader.start();
     shader.loadProjectionMatrix(projection_matrix);
     shader.stop();
 }
 
-void Renderer::clear() {
-    glEnable(GL_DEPTH_TEST);
-    //glClearColor(0, 0, 0, 1);
-    glClearColor(59/255.0f, 0/255.0f, 0/255.0f, 1);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-}
-
-void Renderer::prepareTexturedModel(TexturedModel& model) {
+void EntityRenderer::prepareTexturedModel(TexturedModel& model) {
     RawModel& raw_model = model.getRawModel();
     glBindVertexArray(raw_model.getVaoId());
     glEnableVertexAttribArray(0);
@@ -28,20 +20,20 @@ void Renderer::prepareTexturedModel(TexturedModel& model) {
     glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());
 }
 
-void Renderer::unbindTexturedModel() {
+void EntityRenderer::unbindTexturedModel() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
 }
 
-void Renderer::prepareInstance(Entity& entity) {
+void EntityRenderer::prepareInstance(Entity& entity) {
     glm::mat4 transformation_matrix = Maths::createTransformationMatrix(
             entity.getPosition(), entity.getRotation(), entity.getScale());
     shader.loadTransformationMatrix(transformation_matrix);
 }
 
-void Renderer::render(std::map<TexturedModel*, std::vector<Entity*>>& entities) {
+void EntityRenderer::render(std::map<TexturedModel*, std::vector<Entity*>>& entities) {
     for (auto& entry: entities) {
         TexturedModel* model = entry.first;
         std::vector<Entity*> batch = entry.second;
@@ -54,14 +46,3 @@ void Renderer::render(std::map<TexturedModel*, std::vector<Entity*>>& entities) 
     }
 }
 
-void Renderer::createProjectionMatrix(int width, int height) {
-    float aspect = (float)width / (float)height;
-    float y_scale = (float)((1.0f / tan(glm::radians(0.5f * FOV))) * aspect);
-    float x_scale = y_scale / aspect;
-    float frustulength = FAR_PLANE - NEAR_PLANE;
-
-    projection_matrix[0] = glm::vec4(x_scale, 0, 0, 0);
-    projection_matrix[1] = glm::vec4(0, y_scale, 0, 0);
-    projection_matrix[2] = glm::vec4(0, 0, -(FAR_PLANE + NEAR_PLANE)/frustulength, -1);
-    projection_matrix[3] = glm::vec4(0, 0, -(2 * NEAR_PLANE * FAR_PLANE)/frustulength, 0);
-}

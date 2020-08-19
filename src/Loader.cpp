@@ -27,11 +27,14 @@ GLuint Loader::loadTexture(const char* filename)
 
     // load image
     int width, height, nuchannels;
-    unsigned char* data = stbi_load(filename, &width, &height, &nuchannels, 0);
+    char full_filename[100];
+    sprintf(full_filename, "data/textures/%s", filename);
+
+    unsigned char* data = stbi_load(full_filename, &width, &height, &nuchannels, 0);
 
     if (!data) {
         printf("Failed to load texture\n");
-        data = stbi_load("data/source_fail.png", &width, &height, &nuchannels, 0);
+        data = stbi_load("data/textures/source_fail.png", &width, &height, &nuchannels, 0);
     }
 
     GLenum pixel_format = GL_RGB;

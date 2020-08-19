@@ -4,13 +4,17 @@ Camera::Camera(GLFWwindow* window) : window(window) {}
 
 void Camera::move() {
     if (glfwGetKey(window, GLFW_KEY_W))
-        position.z -= 1.0f;
+        position.y += 0.2f;
     if (glfwGetKey(window, GLFW_KEY_A))
-        position.x -= 1.0f;
+        position.x -= 0.2f;
     if (glfwGetKey(window, GLFW_KEY_S))
-        position.z += 1.0f;
+        position.y -= 0.2f;
     if (glfwGetKey(window, GLFW_KEY_D))
-        position.x += 1.0f;
+        position.x += 0.2f;
+    if (glfwGetKey(window, GLFW_KEY_Q))
+        position.z -= 0.2f;
+    if (glfwGetKey(window, GLFW_KEY_E))
+        position.z += 0.2f;
 }
 
 glm::vec3 Camera::getRotation() {

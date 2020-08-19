@@ -1,6 +1,7 @@
 #include "StaticShader.h"
 
-StaticShader::StaticShader() : ShaderProgram("data/vertexShader.glsl", "data/fragmentShader.glsl") 
+StaticShader::StaticShader() 
+    : ShaderProgram("data/shaders/vertex_shader.glsl", "data/shaders/fragment_shader.glsl") 
 { 
     bindAttributes();
     getAllUniformLocations();

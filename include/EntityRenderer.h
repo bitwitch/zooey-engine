@@ -16,23 +16,16 @@
 #include "Maths.h"
 #include "Display.h"
 
-class Renderer {
+class EntityRenderer {
 
 private:
-    glm::mat4 projection_matrix;
     StaticShader& shader;
 
-    constexpr static GLfloat FOV = 80;
-    constexpr static GLfloat NEAR_PLANE = 0.1f;
-    constexpr static GLfloat FAR_PLANE = 1000;
-
-    void createProjectionMatrix(int width, int height);
     void prepareTexturedModel(TexturedModel& model);
     void unbindTexturedModel();
     void prepareInstance(Entity& entity);
 
 public:
-    Renderer(Display& display, StaticShader& shader);
+    EntityRenderer(StaticShader& shader, glm::mat4 projection_matrix);
     void render(std::map<TexturedModel*, std::vector<Entity*>>& entities);
-    void clear();
 };

@@ -1,19 +1,27 @@
 #pragma once
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "RawModel.h"
+#include "ModelTexture.h"
+#include "Loader.h"
+
 class Terrain {
     
 private:
-    static const GLfloat SIZE = 800;
-    static const GLuint VERTEX_COUNT = 128;
+    constexpr static GLfloat SIZE = 800;
+    constexpr static GLuint VERTEX_COUNT = 128;
     GLfloat x;
     GLfloat z;
-    RawModel& model;
+    RawModel model;
     ModelTexture texture;
+    RawModel generateTerrain(Loader& loader);
 
 public:
-
-
-
-
+    Terrain(int grid_x, int grid_y, Loader& loader, ModelTexture& texture);
+    GLfloat getX();
+    GLfloat getZ();
+    RawModel& getModel();
+    ModelTexture& getTexture();
     
 };
