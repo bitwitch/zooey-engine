@@ -7,8 +7,8 @@
 class Camera {
 
 private:
-    glm::vec3 position;
-    glm::vec3 rotation;
+    glm::vec3 position { 0, 5, 0 };
+    glm::vec3 rotation { 10, 0, 0 };
     GLFWwindow* window;
 
 public:

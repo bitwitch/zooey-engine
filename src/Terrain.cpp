@@ -10,20 +10,22 @@ Terrain::Terrain(int grid_x, int grid_y, Loader& loader, ModelTexture& texture)
 
 RawModel Terrain::generateTerrain(Loader& loader) {
     int count = VERTEX_COUNT * VERTEX_COUNT;
-    std::vector<GLfloat> vertices(count * 3, 0);
-    std::vector<GLfloat> tex_coords(count * 2, 0);
-    std::vector<GLfloat> normals(count * 3, 0);
-    std::vector<GLuint> indices(6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1), 0);
-    int vertex_pointer = 0;
+    std::vector<GLfloat> vertices(count * 3);
+    std::vector<GLfloat> tex_coords(count * 2);
+    std::vector<GLfloat> normals(count * 3);
+    std::vector<GLuint> indices(6 * (VERTEX_COUNT - 1) * (VERTEX_COUNT - 1));
 
+    int vertex_pointer = 0;
     for (int i=0; i<VERTEX_COUNT; i++) {
-        for (int j=0; i<VERTEX_COUNT; j++) {
-            vertices[vertex_pointer*3] = -(float)j / ((float)VERTEX_COUNT - 1) * SIZE;
+        for (int j=0; j<VERTEX_COUNT; j++) {
+            vertices[vertex_pointer*3]   = -(float)j / ((float)VERTEX_COUNT - 1) * SIZE;
             vertices[vertex_pointer*3+1] = 0;
             vertices[vertex_pointer*3+2] = -(float)i / ((float)VERTEX_COUNT - 1) * SIZE;
-            tex_coords[vertex_pointer*3] = (float)j / ((float)VERTEX_COUNT - 1) * SIZE;
-            tex_coords[vertex_pointer*3+1] = (float)i / ((float)VERTEX_COUNT - 1) * SIZE;
-            normals[vertex_pointer*3] = 0;
+
+            tex_coords[vertex_pointer*2]   = (float)j / ((float)VERTEX_COUNT - 1);
+            tex_coords[vertex_pointer*2+1] = (float)i / ((float)VERTEX_COUNT - 1);
+
+            normals[vertex_pointer*3]   = 0;
             normals[vertex_pointer*3+1] = 1;
             normals[vertex_pointer*3+2] = 0;
             vertex_pointer++;

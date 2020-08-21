@@ -14,7 +14,7 @@ private:
     GLfloat x;
     GLfloat z;
     RawModel model;
-    ModelTexture texture;
+    ModelTexture& texture;
     RawModel generateTerrain(Loader& loader);
 
 public:

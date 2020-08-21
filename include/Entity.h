@@ -1,3 +1,5 @@
+#pragma once 
+
 #include "TexturedModel.h"
 #include "glm_subset.h"
 

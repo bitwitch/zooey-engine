@@ -16,22 +16,15 @@
 
 int main(int argc, char** argv) 
 {
-    Display display = Display("Game Title");
+    Display display = Display("Demo");
     display.createWindow();
     Loader loader = Loader();
 
     //double lastTime = display.getTime();
     //int nbFrames = 0;
 
-    //RawModel model = OBJLoader::loadObjModel("dragon", loader);
-    //ModelTexture texture = ModelTexture(loader.loadTexture("cream.png"));
-    //TexturedModel textured_model = TexturedModel(model, texture);
-    //texture.setShineDamper(10);
-    //texture.setReflectivity(1);
-
-    //Entity entity = Entity(textured_model, glm::vec3(0,-5,-30));
-
-    Light light = Light(glm::vec3(3000,2000,3000), glm::vec3(1,1,1));
+    //Light light = Light(glm::vec3(0,50000,100), glm::vec3(1,1,1));
+    Light light = Light(glm::vec3(20000,20000,2000), glm::vec3(1,1,1));
 
     Camera camera = Camera(display.getWindow());
 
@@ -40,8 +33,6 @@ int main(int argc, char** argv)
     cube_texture.setShineDamper(10);
     cube_texture.setReflectivity(0.2);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
-
-    Entity entity = Entity(cube_model, glm::vec3(0,0,-5));
 
     std::vector<Entity> cubes;
     for (int i=0; i<3000; i++) {
@@ -55,6 +46,11 @@ int main(int argc, char** argv)
         cubes.push_back(cube);
     }
 
+    ModelTexture terrain_texture = ModelTexture(loader.loadTexture("grass.png"));
+    ModelTexture terrain_texture2 = ModelTexture(loader.loadTexture("ground_grass_gen_10.png"));
+    Terrain terrain = Terrain(0, 0, loader, terrain_texture);
+    Terrain terrain2 = Terrain(1, 0, loader, terrain_texture2);
+
     MasterRenderer renderer = MasterRenderer(display);
 
     while (!display.windowShouldClose())
@@ -63,14 +59,14 @@ int main(int argc, char** argv)
 
         camera.move();
 
+        renderer.processTerrain(terrain);
+        renderer.processTerrain(terrain2);
+
         //for (auto& cube: cubes) {
             //cube.rotate(1,2,3);
             //renderer.processEntity(cube);
         //}
         
-        entity.rotate(0, -0.5, 0);
-        renderer.processEntity(entity);
-
         renderer.render(light, camera);
 
         display.update();

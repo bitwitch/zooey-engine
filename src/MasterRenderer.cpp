@@ -2,7 +2,8 @@
 
 MasterRenderer::MasterRenderer(Display& display) 
     : projection_matrix(createProjectionMatrix(display.getWidth(), display.getHeight()))
-    , renderer(shader, projection_matrix) 
+    , renderer(shader, projection_matrix)
+    , terrain_renderer(terrain_shader, projection_matrix)
 { 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -10,12 +11,21 @@ MasterRenderer::MasterRenderer(Display& display)
 
 void MasterRenderer::render(Light& light, Camera& camera) {
     clear();
+
     shader.start();
     shader.loadLight(light);
     shader.loadViewMatrix(camera);
     renderer.render(entities);
     shader.stop();
+
+    terrain_shader.start();
+    terrain_shader.loadLight(light);
+    terrain_shader.loadViewMatrix(camera);
+    terrain_renderer.render(terrains);
+    terrain_shader.stop();
+
     entities.clear();
+    terrains.clear();
 }
 
 void MasterRenderer::processEntity(Entity& entity) {
@@ -28,6 +38,10 @@ void MasterRenderer::processEntity(Entity& entity) {
         new_batch.push_back(&entity);
         entities[&model] = new_batch;
     } 
+}
+
+void MasterRenderer::processTerrain(Terrain& terrain) {
+    terrains.push_back(&terrain);
 }
 
 glm::mat4 MasterRenderer::createProjectionMatrix(int width, int height) {

@@ -6,8 +6,8 @@ class ModelTexture {
 
 private:
     GLuint texture_id;
-    GLfloat shine_damper;
-    GLfloat reflectivity;
+    GLfloat shine_damper = 1;
+    GLfloat reflectivity = 0;
 
 public:
     ModelTexture(GLuint id);
