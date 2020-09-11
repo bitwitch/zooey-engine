@@ -13,4 +13,10 @@ public:
     static glm::mat4 
     createViewMatrix(Camera& camera);
 
+    static glm::vec3 
+    lerp(glm::vec3 a, glm::vec3 b, float amount);
+
+    static float 
+    lerp(float a, float b, float amount);
+
 };

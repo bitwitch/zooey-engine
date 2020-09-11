@@ -13,6 +13,7 @@
 #include "OBJLoader.h"
 #include "Light.h"
 #include "Random.h"
+#include "Maths.h"
 
 int main(int argc, char** argv) 
 {
@@ -30,21 +31,31 @@ int main(int argc, char** argv)
 
     // Cubes
     RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
-    ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
-    cube_texture.setShineDamper(35);
-    cube_texture.setReflectivity(0.2);
+    //ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
+    ModelTexture cube_texture = ModelTexture(loader.loadTexture("bronze.png"));
+    cube_texture.setShineDamper(10);
+    cube_texture.setReflectivity(0.8);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
 
     std::vector<Entity> cubes;
-    for (int i=0; i<1000; i++) {
-        Entity cube = Entity(cube_model, 
-                glm::vec3(Random::integer(-100,100), 
-                          Random::integer(0,100), 
-                          Random::integer(-200,200)),
-                glm::vec3(Random::integer(0,360),
-                          Random::integer(0,360),
-                          Random::integer(0,360)));
-        cubes.push_back(cube);
+    std::vector<glm::vec3> cube_starts;
+    std::vector<glm::vec3> cube_targets;
+    std::vector<glm::vec3> cube_rotations;
+
+    for (int i=0; i<13; i++) {
+        for (int j=0; j<13; j++) {
+            for (int k=0; k<13; k++) {
+                Entity cube = Entity(cube_model, glm::vec3(-3*i, 3*j+2, -3*k));
+                cubes.push_back(cube);
+                cube_starts.push_back(cube.getPosition());
+                cube_targets.push_back(glm::vec3(Random::integer(-200, 200), 
+                                                  Random::integer(2, 200), 
+                                                  Random::integer(0, -200)));
+                cube_rotations.push_back(glm::vec3(Random::integer(0, 360), 
+                                                   Random::integer(0, 360), 
+                                                   Random::integer(0, 360)));
+            }
+        }
     }
 
     // Dragons
@@ -66,9 +77,34 @@ int main(int argc, char** argv)
 
     MasterRenderer renderer = MasterRenderer(display);
 
+    bool reset = false;
+    bool explode = false;
+    bool rotated = false;
+    float explosion_speed = 0.05f;
+    GLFWwindow* window = display.getWindow();
+
     while (!display.windowShouldClose())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
+
+
+        if (glfwGetKey(window, GLFW_KEY_0))
+            reset = true;
+
+        if (reset) {
+            explode = false;
+            rotated = false;
+            reset = false;
+            for (int i=0; i<cubes.size(); i++) { 
+                auto& cube = cubes[i];
+                auto start = cube_starts[i];
+                cube.position = start;
+                cube.rotation = glm::vec3(0,0,0);
+            }
+        }
+
+        if (glfwGetKey(window, GLFW_KEY_8))
+            explode = true;
 
         camera.move();
 
@@ -77,13 +113,27 @@ int main(int argc, char** argv)
         renderer.processTerrain(terrain3);
         renderer.processTerrain(terrain4);
 
-        //for (auto& cube: cubes) {
-            //cube.rotate(1,2,3);
-            //renderer.processEntity(cube);
-        //}
+        if (explode && !rotated) {
+            for (int i=0; i<cubes.size(); i++) { 
+                auto& cube = cubes[i];
+                cube.rotation = cube_rotations[i];
+            }
+            rotated = true;
+        }
 
-        dragon.rotate(0,1,0);
-        renderer.processEntity(dragon);
+        for (int i=0; i<cubes.size(); i++) { 
+            auto& cube = cubes[i];
+            if (explode) {
+                auto target = cube_targets[i];
+                glm::vec3 movement = (target - cube.getPosition()) * explosion_speed;
+                cube.move(movement);
+                cube.rotate(1, 2, 3);
+            }
+            renderer.processEntity(cube);
+        }
+
+        //dragon.rotate(0,1,0);
+        //renderer.processEntity(dragon);
        
         renderer.render(light, camera);
 

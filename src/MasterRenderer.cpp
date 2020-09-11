@@ -61,7 +61,11 @@ glm::mat4 MasterRenderer::createProjectionMatrix(int width, int height) {
 void MasterRenderer::clear() {
     glEnable(GL_DEPTH_TEST);
     //glClearColor(0, 0, 0, 1);
-    glClearColor(59/255.0f, 0/255.0f, 0/255.0f, 1);
+    //glClearColor(59/255.0f, 0/255.0f, 0/255.0f, 1); // red
+    //glClearColor(198/255.0f, 68/255.0f, 9/255.0f, 1); // orangered
+    //glClearColor(41/255.0f, 41/255.0f, 41/255.0f, 1);
+    glClearColor(11/255.0f, 39/255.0f, 34/255.0f, 1);
+
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 

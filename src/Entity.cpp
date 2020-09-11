@@ -19,6 +19,10 @@ glm::vec3 Entity::getScale() {
     return _scale;
 }
 
+void Entity::move(glm::vec3 movement) {
+    position += movement;
+}
+
 void Entity::move(float dx, float dy, float dz) {
     position.x += dx;
     position.y += dy;

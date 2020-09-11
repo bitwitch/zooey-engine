@@ -5,7 +5,7 @@
 
 class Entity {
 
-private:
+public:
     TexturedModel& model;
     glm::vec3 position;
     glm::vec3 rotation;
@@ -22,6 +22,7 @@ public:
     glm::vec3 getScale();
 
     void move(float dx, float dy, float dz);
+    void move(glm::vec3 movement);
     void rotate(float dx, float dy, float dz);
     void scale(float dx, float dy, float dz);
 

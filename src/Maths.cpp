@@ -21,3 +21,16 @@ glm::mat4 Maths::createViewMatrix(Camera& camera)
     matrix = glm::translate(matrix, -camera.getPosition());
     return matrix;
 }
+
+
+float Maths::lerp(float a, float b, float amount) {
+    return a + (b - a) * amount;
+}
+
+glm::vec3 Maths::lerp(glm::vec3 a, glm::vec3 b, float amount) {
+    glm::vec3 result;
+    result.x = lerp(a.x, b.x, amount);
+    result.y = lerp(a.y, b.y, amount);
+    result.z = lerp(a.z, b.z, amount);
+    return result;
+}
