@@ -32,8 +32,8 @@ int main(int argc, char** argv)
     RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
     //ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
     ModelTexture cube_texture = ModelTexture(loader.loadTexture("error_texture.png"));
-    cube_texture.setShineDamper(10);
-    cube_texture.setReflectivity(0.8);
+    cube_texture.setShineDamper(20);
+    cube_texture.setReflectivity(0.4);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
 
     std::vector<Entity> cubes;
