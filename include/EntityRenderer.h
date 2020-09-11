@@ -7,14 +7,12 @@
 #include <vector>
 #include <map>
 
+#include "glm_subset.h"
 
-#include "RawModel.h"
-#include "ModelTexture.h"
-#include "TexturedModel.h"
-#include "Entity.h"
-#include "StaticShader.h"
-#include "Maths.h"
-#include "Display.h"
+class StaticShader;
+class TexturedModel;
+class Entity;
+
 
 class EntityRenderer {
 

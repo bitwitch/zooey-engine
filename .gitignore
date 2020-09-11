@@ -1,3 +1,5 @@
 demo
 game
 **/.DS_Store
+bin/
+obj/

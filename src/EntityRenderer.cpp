@@ -1,4 +1,9 @@
 #include "EntityRenderer.h"
+#include "StaticShader.h"
+#include "RawModel.h"
+#include "ModelTexture.h"
+#include "TexturedModel.h"
+#include "Entity.h"
 
 EntityRenderer::EntityRenderer (StaticShader& shader, glm::mat4 projection_matrix) 
     : shader(shader) 

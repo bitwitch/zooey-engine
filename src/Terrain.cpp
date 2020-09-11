@@ -1,5 +1,6 @@
 #include "Terrain.h"
 #include <vector>
+#include "Loader.h"
 
 Terrain::Terrain(int grid_x, int grid_y, Loader& loader, ModelTexture& texture) 
 :   x         ( grid_x * SIZE )

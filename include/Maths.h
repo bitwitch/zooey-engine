@@ -1,7 +1,8 @@
 #pragma once 
 
 #include "glm_subset.h"
-#include "Camera.h"
+
+class Camera; 
 
 class Maths {
 

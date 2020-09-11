@@ -1,7 +1,8 @@
 #pragma once
 
-#include "RawModel.h"
-#include "ModelTexture.h"
+// forward decl
+class RawModel;
+class ModelTexture;
 
 class TexturedModel {
 

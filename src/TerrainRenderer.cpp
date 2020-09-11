@@ -1,5 +1,8 @@
 #include "TerrainRenderer.h"
-
+#include "TerrainShader.h"
+#include "Terrain.h"
+#include "ModelTexture.h"
+//#include "TexturedModel.h"
 
 TerrainRenderer::TerrainRenderer(TerrainShader& shader, glm::mat4 projection_matrix)
     : shader(shader) 

@@ -1,4 +1,8 @@
 #include "MasterRenderer.h"
+#include "Light.h"
+#include "Camera.h"
+#include "Display.h"
+#include "Entity.h"
 
 MasterRenderer::MasterRenderer(Display& display) 
     : projection_matrix(createProjectionMatrix(display.getWidth(), display.getHeight()))

@@ -2,10 +2,9 @@
 
 #include <vector> 
 #include "glm_subset.h"
-#include "Terrain.h"
-#include "TerrainShader.h"
-#include "TexturedModel.h"
-#include "Entity.h"
+
+class Terrain;
+class TerrainShader;
 
 class TerrainRenderer {
 

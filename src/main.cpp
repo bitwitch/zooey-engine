@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Display.h"
+#include "Entity.h"
+#include "Terrain.h"
 #include "Loader.h"
 #include "ModelTexture.h"
 #include "TexturedModel.h"

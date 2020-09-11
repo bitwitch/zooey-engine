@@ -1,4 +1,5 @@
 #include "Maths.h"
+#include "Camera.h"
 
 glm::mat4 Maths::createTransformationMatrix(
         glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)

@@ -1,7 +1,9 @@
 #pragma once 
 
-#include "TexturedModel.h"
 #include "glm_subset.h"
+
+// forward decl
+class TexturedModel;
 
 class Entity {
 

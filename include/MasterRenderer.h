@@ -2,15 +2,20 @@
 
 #include <map>
 #include <vector>
-#include "TexturedModel.h"
-#include "EntityRenderer.h"
+
+class TexturedModel;
+class Entity;
+class Terrain;
+class Display;
+class Camera;
+class Light;
+
+
 #include "StaticShader.h"
-#include "Terrain.h"
-#include "TerrainRenderer.h"
+#include "EntityRenderer.h"
 #include "TerrainShader.h"
-#include "Light.h"
-#include "Camera.h"
-#include "Display.h"
+#include "TerrainRenderer.h"
+
 
 class MasterRenderer {
 

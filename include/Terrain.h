@@ -2,9 +2,12 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include "RawModel.h"
-#include "ModelTexture.h"
-#include "Loader.h"
+
+class ModelTexture;
+class Loader;
+
 
 class Terrain {
     
