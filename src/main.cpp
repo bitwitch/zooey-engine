@@ -24,7 +24,6 @@ int main(int argc, char** argv)
     //double lastTime = display.getTime();
     //int nbFrames = 0;
 
-    //Light light = Light(glm::vec3(0,50000,100), glm::vec3(1,1,1));
     Light light = Light(glm::vec3(20000,20000,2000), glm::vec3(1,1,1));
 
     Camera camera = Camera(display.getWindow());
@@ -32,7 +31,7 @@ int main(int argc, char** argv)
     // Cubes
     RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
     //ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
-    ModelTexture cube_texture = ModelTexture(loader.loadTexture("bronze.png"));
+    ModelTexture cube_texture = ModelTexture(loader.loadTexture("error_texture.png"));
     cube_texture.setShineDamper(10);
     cube_texture.setReflectivity(0.8);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
@@ -77,16 +76,26 @@ int main(int argc, char** argv)
 
     MasterRenderer renderer = MasterRenderer(display);
 
+
+    // random demo variables
     bool reset = false;
     bool explode = false;
     bool rotated = false;
     float explosion_speed = 0.05f;
+    bool cube_mode = true; // false == dragon_mode
+    bool dragon_rotate = false;
     GLFWwindow* window = display.getWindow();
+
+
 
     while (!display.windowShouldClose())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
 
+        if (glfwGetKey(window, GLFW_KEY_7)) {
+            cube_mode = !cube_mode;
+            reset = true;
+        }
 
         if (glfwGetKey(window, GLFW_KEY_0))
             reset = true;
@@ -95,6 +104,7 @@ int main(int argc, char** argv)
             explode = false;
             rotated = false;
             reset = false;
+            dragon_rotate = false;
             for (int i=0; i<cubes.size(); i++) { 
                 auto& cube = cubes[i];
                 auto start = cube_starts[i];
@@ -105,6 +115,9 @@ int main(int argc, char** argv)
 
         if (glfwGetKey(window, GLFW_KEY_8))
             explode = true;
+
+        if (glfwGetKey(window, GLFW_KEY_6))
+            dragon_rotate = !dragon_rotate;
 
         camera.move();
 
@@ -121,20 +134,23 @@ int main(int argc, char** argv)
             rotated = true;
         }
 
-        for (int i=0; i<cubes.size(); i++) { 
-            auto& cube = cubes[i];
-            if (explode) {
-                auto target = cube_targets[i];
-                glm::vec3 movement = (target - cube.getPosition()) * explosion_speed;
-                cube.move(movement);
-                cube.rotate(1, 2, 3);
+        if (cube_mode) {
+            for (int i=0; i<cubes.size(); i++) { 
+                auto& cube = cubes[i];
+                if (explode) {
+                    auto target = cube_targets[i];
+                    glm::vec3 movement = (target - cube.getPosition()) * explosion_speed;
+                    cube.move(movement);
+                    cube.rotate(1, 2, 3);
+                }
+                renderer.processEntity(cube);
             }
-            renderer.processEntity(cube);
+        } else {
+            if (dragon_rotate) 
+                dragon.rotate(0,1,0);
+            renderer.processEntity(dragon);
         }
 
-        //dragon.rotate(0,1,0);
-        //renderer.processEntity(dragon);
-       
         renderer.render(light, camera);
 
         display.update();
