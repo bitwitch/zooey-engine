@@ -1,5 +1,9 @@
 #include "Loader.h"
+
+#include <stdlib.h>
+#include <algorithm>
 #include "RawModel.h"
+#include "stb_image.h"
 
 RawModel Loader::loadToVAO(std::vector<GLfloat> positions, 
                            std::vector<GLfloat> tex_coords, 
