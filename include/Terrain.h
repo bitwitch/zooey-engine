@@ -6,8 +6,6 @@
 #include "RawModel.h"
 
 class ModelTexture;
-class Loader;
-
 
 class Terrain {
     
@@ -18,10 +16,10 @@ private:
     GLfloat z;
     RawModel model;
     ModelTexture& texture;
-    RawModel generateTerrain(Loader& loader);
+    RawModel generateTerrain();
 
 public:
-    Terrain(int grid_x, int grid_y, Loader& loader, ModelTexture& texture);
+    Terrain(int grid_x, int grid_y, ModelTexture& texture);
     GLfloat getX();
     GLfloat getZ();
     RawModel& getModel();

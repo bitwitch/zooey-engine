@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 {
     Display display = Display("Demo");
     display.createWindow();
-    Loader loader = Loader();
 
     //double lastTime = display.getTime();
     //int nbFrames = 0;
@@ -31,9 +30,9 @@ int main(int argc, char** argv)
     Camera camera = Camera(display.getWindow());
 
     // Cubes
-    RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
-    //ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
-    ModelTexture cube_texture = ModelTexture(loader.loadTexture("error_texture.png"));
+    RawModel cube_raw = loadObjModel("cube");
+    //ModelTexture cube_texture = ModelTexture(load_texture("grass_block.png"));
+    ModelTexture cube_texture = ModelTexture(load_texture("error_texture.png"));
     cube_texture.setShineDamper(20);
     cube_texture.setReflectivity(0.4);
     TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
@@ -60,8 +59,8 @@ int main(int argc, char** argv)
     }
 
     // Dragons
-    RawModel dragon_raw = OBJLoader::loadObjModel("dragon", loader);
-    ModelTexture dragon_texture = ModelTexture(loader.loadTexture("bronze.png"));
+    RawModel dragon_raw = loadObjModel("dragon");
+    ModelTexture dragon_texture = ModelTexture(load_texture("bronze.png"));
     dragon_texture.setShineDamper(10);
     dragon_texture.setReflectivity(0.85);
     TexturedModel dragon_model = TexturedModel(dragon_raw, dragon_texture);
@@ -69,12 +68,12 @@ int main(int argc, char** argv)
 
 
     // Terrain
-    ModelTexture terrain_texture = ModelTexture(loader.loadTexture("grass.png"));
-    //ModelTexture terrain_texture2 = ModelTexture(loader.loadTexture("ground_grass_gen_10.png"));
-    Terrain terrain1 = Terrain(0, 0, loader, terrain_texture);
-    Terrain terrain2 = Terrain(0, 1, loader, terrain_texture);
-    Terrain terrain3 = Terrain(1, 0, loader, terrain_texture);
-    Terrain terrain4 = Terrain(1, 1, loader, terrain_texture);
+    ModelTexture terrain_texture = ModelTexture(load_texture("grass.png"));
+    //ModelTexture terrain_texture2 = ModelTexture(load_texture("ground_grass_gen_10.png"));
+    Terrain terrain1 = Terrain(0, 0, terrain_texture);
+    Terrain terrain2 = Terrain(0, 1, terrain_texture);
+    Terrain terrain3 = Terrain(1, 0, terrain_texture);
+    Terrain terrain4 = Terrain(1, 1, terrain_texture);
 
     MasterRenderer renderer = MasterRenderer(display);
 
@@ -158,7 +157,8 @@ int main(int argc, char** argv)
         display.update();
     }
 
-    loader.cleanUp();
+    
+    delete_gl_buffers();
     display.close();
 
     exit(EXIT_SUCCESS);

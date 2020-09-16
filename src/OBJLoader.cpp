@@ -9,9 +9,10 @@
 #include <cstdlib>
 #include <iostream> 
 
+#include "Loader.h"
+#include "RawModel.h"
 
-
-RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
+RawModel loadObjModel(std::string filename) {
 
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> texture_coords;
@@ -84,13 +85,13 @@ RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
     //
     int ids[3]; // ids = [ v_id, vt_id, vn_id ]
     int i, index_number = 0;
-    std::string nustr;
+    std::string num_string;
     for (const auto& face: faces) {
         std::istringstream ss(face);
 
         i = 0;
-        while(std::getline(ss, nustr, '/'))
-            ids[i++] = std::stoi(nustr);
+        while(std::getline(ss, num_string, '/'))
+            ids[i++] = std::stoi(num_string);
 
         glm::vec3 current_vertex = vertices.at(ids[0] - 1);
         vertices_array.push_back(current_vertex.x);
@@ -110,6 +111,6 @@ RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
             indices_array.push_back(index_number++);
     }
 
-    return loader.loadToVAO(vertices_array, texture_coords_array, normals_array, indices_array);
+    return load_to_vao(vertices_array, texture_coords_array, normals_array, indices_array);
 }
 

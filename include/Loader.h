@@ -6,23 +6,12 @@
 
 class RawModel;
 
-class Loader {
+RawModel load_to_vao(std::vector<GLfloat> positions, 
+                     std::vector<GLfloat> tex_coords, 
+                     std::vector<GLfloat> normals, 
+                     std::vector<GLuint>  indices);
 
-private:
-	std::vector<GLuint> vaos;
-	std::vector<GLuint> vbos;
-	std::vector<GLuint> textures;
+GLuint load_texture(const char* filename);
 
-    GLuint createVAO();
-    void storeDataInAttributeList(GLuint attribute_number, GLuint coord_size, 
-            std::vector<float> data);
-    void bindIndicesBuffer(std::vector<GLuint> indices);
-    void unbindVAO();
+void delete_gl_buffers();
 
-public:
-    RawModel loadToVAO(std::vector<GLfloat> positions, std::vector<GLfloat> tex_coords, 
-            std::vector<GLfloat> normals, std::vector<GLuint> indices);
-    GLuint loadTexture(const char* filename);
-    void cleanUp();
-
-};

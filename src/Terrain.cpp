@@ -2,14 +2,14 @@
 #include <vector>
 #include "Loader.h"
 
-Terrain::Terrain(int grid_x, int grid_y, Loader& loader, ModelTexture& texture) 
+Terrain::Terrain(int grid_x, int grid_y, ModelTexture& texture) 
 :   x         ( grid_x * SIZE )
 ,   z         ( grid_y * SIZE )
-,   model     ( generateTerrain(loader) )
+,   model     ( generateTerrain() )
 ,   texture   ( texture )
 { }
 
-RawModel Terrain::generateTerrain(Loader& loader) {
+RawModel Terrain::generateTerrain() {
     int count = VERTEX_COUNT * VERTEX_COUNT;
     std::vector<GLfloat> vertices(count * 3);
     std::vector<GLfloat> tex_coords(count * 2);
@@ -49,7 +49,7 @@ RawModel Terrain::generateTerrain(Loader& loader) {
         }
     }
 
-    return loader.loadToVAO(vertices, tex_coords, normals, indices);
+    return load_to_vao(vertices, tex_coords, normals, indices);
 }
 
 GLfloat Terrain::getX() {

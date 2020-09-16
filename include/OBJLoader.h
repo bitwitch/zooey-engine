@@ -1,14 +1,8 @@
 #pragma once
 
 #include <string>
-#include "RawModel.h"
-#include "Loader.h"
 
-class OBJLoader {
+class RawModel;
 
-public:
-    static RawModel loadObjModel(std::string filename, Loader loader);
+RawModel loadObjModel(std::string filename);
 
-private:
-
-};
