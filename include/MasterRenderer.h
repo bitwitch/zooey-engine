@@ -24,6 +24,10 @@ private:
     constexpr static GLfloat NEAR_PLANE = 0.1f;
     constexpr static GLfloat FAR_PLANE = 1000;
 
+    constexpr static GLfloat SKY_R = 11/255.0f;
+    constexpr static GLfloat SKY_G = 39/255.0f;
+    constexpr static GLfloat SKY_B = 34/255.0f;
+
     glm::mat4 projection_matrix;
 
     StaticShader shader;

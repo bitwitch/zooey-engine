@@ -4,11 +4,13 @@ in vec2 pass_tex_coords;
 in vec3 surface_normal;
 in vec3 to_light;
 in vec3 to_camera;
+in float visibility;
 
 uniform sampler2D texture_sampler;
 uniform vec3 light_color;
 uniform float shine_damper;
 uniform float reflectivity;
+uniform vec3 sky_color;
 
 out vec4 out_color;
 
@@ -28,5 +30,8 @@ void main(void) {
   float damped_factor = pow(specular_factor, shine_damper);
   vec3 final_specular = damped_factor * reflectivity * light_color;
 
-  out_color = vec4(diffuse, 1.0) * texture(texture_sampler, pass_tex_coords) + vec4(final_specular, 1.0);
+  vec4 texture_color = texture(texture_sampler, pass_tex_coords);
+
+  out_color = vec4(diffuse, 1.0) * texture_color + vec4(final_specular, 1.0);
+  out_color = mix(vec4(sky_color, 1.0), out_color, visibility);
 }

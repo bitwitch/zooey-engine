@@ -15,6 +15,7 @@ private:
     GLuint location_light_color;
     GLfloat location_shine_damper;
     GLfloat location_reflectivity;
+    GLfloat location_sky_color;
 
 public:
     StaticShader();
@@ -22,6 +23,7 @@ public:
     void loadProjectionMatrix(glm::mat4 matrix);
     void loadViewMatrix(Camera& camera);
     void loadLight(Light& light);
+    void loadSkyColor(float r, float g, float b);
     void loadShineVariables(GLfloat damper, GLfloat reflectivity);
 
 protected:
