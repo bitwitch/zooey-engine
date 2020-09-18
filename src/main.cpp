@@ -88,14 +88,21 @@ int main(int argc, char** argv)
     GLFWwindow* window = Display::window;
 
 
+    bool was_key_7 = false;
+    bool was_key_6 = false;
     while (!Display::window_should_close())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
         Display::update_time();
 
         if (glfwGetKey(window, GLFW_KEY_7)) {
-            cube_mode = !cube_mode;
-            reset = true;
+            if (!was_key_7) {
+                cube_mode = !cube_mode;
+                reset = true;
+            }
+            was_key_7 = true;
+        } else {
+            was_key_7 = false;
         }
 
         if (glfwGetKey(window, GLFW_KEY_0))
@@ -117,10 +124,15 @@ int main(int argc, char** argv)
         if (glfwGetKey(window, GLFW_KEY_8))
             explode = true;
 
-        if (glfwGetKey(window, GLFW_KEY_6))
-            dragon_rotate = !dragon_rotate;
+        if (glfwGetKey(window, GLFW_KEY_6)) {
+            if (!was_key_6)
+                dragon_rotate = !dragon_rotate;
+            was_key_6 = true;
+        } else {
+            was_key_6 = false;
+        }
 
-        camera.move();
+        camera.move(Display::frame_dt);
 
         renderer.processTerrain(terrain1);
         renderer.processTerrain(terrain2);

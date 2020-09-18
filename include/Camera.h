@@ -15,6 +15,6 @@ public:
     Camera(GLFWwindow* window);
     glm::vec3 getRotation();
     glm::vec3 getPosition();
-    void move();
+    void move(float dt);
 
 };

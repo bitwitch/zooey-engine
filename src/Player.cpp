@@ -6,15 +6,15 @@ Player::Player(GLFWwindow* window, TexturedModel& model, glm::vec3 position, glm
 };
 
 void Player::move(float dt) {
-    check_inputs();
-    Entity::rotate(0, current_turn_speed * dt, 0);
+    //check_inputs();
+    //Entity::rotate(0, current_turn_speed * dt, 0);
 
-    float distance = current_speed * dt;
-    float rot_y = glm::radians(rotation.y);
-    float move_x = distance * sin(rot_y);
-    float move_z = distance * cos(rot_y);
+    //float distance = current_speed * dt;
+    //float rot_y = glm::radians(rotation.y);
+    //float move_x = distance * sin(rot_y);
+    //float move_z = distance * cos(rot_y);
 
-    Entity::move(move_x, 0, move_z);
+    //Entity::move(move_x, 0, move_z);
 }
 
 void Player::check_inputs() {
