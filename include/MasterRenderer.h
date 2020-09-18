@@ -6,10 +6,8 @@
 class TexturedModel;
 class Entity;
 class Terrain;
-class Display;
 class Camera;
 class Light;
-
 
 #include "StaticShader.h"
 #include "EntityRenderer.h"
@@ -43,7 +41,7 @@ private:
     glm::mat4 createProjectionMatrix(int width, int height);
 
 public:
-    MasterRenderer(Display& display);
+    MasterRenderer(int width, int height);
     void render(Light& light, Camera& camera);
     void processEntity(Entity& entity);
     void processTerrain(Terrain& terrain);

@@ -6,6 +6,7 @@
 
 #include "Display.h"
 #include "Entity.h"
+#include "Player.h"
 #include "Terrain.h"
 #include "Loader.h"
 #include "ModelTexture.h"
@@ -19,16 +20,14 @@
 
 int main(int argc, char** argv) 
 {
-    Display display = Display("Demo");
-    display.createWindow();
-    Loader loader = Loader();
+    //Display display = Display("Demo");
+    Display::create_window("Zooey");
 
-    //double lastTime = display.getTime();
-    //int nbFrames = 0;
+    Loader loader = Loader();
 
     Light light = Light(glm::vec3(20000,20000,2000), glm::vec3(1,1,1));
 
-    Camera camera = Camera(display.getWindow());
+    Camera camera = Camera(Display::window);
 
     // Cubes
     RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
@@ -59,13 +58,14 @@ int main(int argc, char** argv)
         }
     }
 
-    // Dragons
+    // Dragon
     RawModel dragon_raw = OBJLoader::loadObjModel("dragon", loader);
     ModelTexture dragon_texture = ModelTexture(loader.loadTexture("bronze.png"));
     dragon_texture.setShineDamper(10);
     dragon_texture.setReflectivity(0.85);
     TexturedModel dragon_model = TexturedModel(dragon_raw, dragon_texture);
-    Entity dragon = Entity(dragon_model, glm::vec3(-30, 0, -50), glm::vec3(0, 0, 0));
+    Player dragon = Player(Display::window, dragon_model, 
+                           glm::vec3(-30, 0, -50), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1));
 
 
     // Terrain
@@ -76,8 +76,7 @@ int main(int argc, char** argv)
     Terrain terrain3 = Terrain(1, 0, loader, terrain_texture);
     Terrain terrain4 = Terrain(1, 1, loader, terrain_texture);
 
-    MasterRenderer renderer = MasterRenderer(display);
-
+    MasterRenderer renderer = MasterRenderer(Display::width, Display::height);
 
     // random demo variables
     bool reset = false;
@@ -86,13 +85,13 @@ int main(int argc, char** argv)
     float explosion_speed = 0.05f;
     bool cube_mode = true; // false == dragon_mode
     bool dragon_rotate = false;
-    GLFWwindow* window = display.getWindow();
+    GLFWwindow* window = Display::window;
 
 
-
-    while (!display.windowShouldClose())
+    while (!Display::window_should_close())
     {
         //logSecondsPerFrame(lastTime, nbFrames);
+        Display::update_time();
 
         if (glfwGetKey(window, GLFW_KEY_7)) {
             cube_mode = !cube_mode;
@@ -148,6 +147,7 @@ int main(int argc, char** argv)
                 renderer.processEntity(cube);
             }
         } else {
+            dragon.move(Display::frame_dt);
             if (dragon_rotate) 
                 dragon.rotate(0,1,0);
             renderer.processEntity(dragon);
@@ -155,11 +155,12 @@ int main(int argc, char** argv)
 
         renderer.render(light, camera);
 
-        display.update();
+        Display::update();
     }
 
     loader.cleanUp();
-    display.close();
+
+    Display::close();
 
     exit(EXIT_SUCCESS);
 }   

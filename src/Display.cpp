@@ -2,85 +2,84 @@
 #include <stdio.h>
 #include "Display.h"
 
-Display::Display(const char* title, int width, int height, int fps_cap) {
-    this->title = title;
-    this->width = width;
-    this->height = height;
-    this->fps_cap = fps_cap;
-}
-
-void Display::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 }
 
-void Display::errorCallback(int error, const char* description)
+void error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
 }
 
-double Display::getTime()
-{
-    return glfwGetTime();
-}
+namespace Display {
 
-void Display::createWindow() 
-{
-    glfwSetErrorCallback(errorCallback);
+    int width = 1280;
+    int height = 720;
+    int fps_cap = 60;
+    double last_frame_time = 0;
+    double current_frame_time = 0;
+    float frame_dt = 0;
+    GLFWwindow* window;
 
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
-
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
-    glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 1 );
-    glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
-    glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE ); 
-
-    window = glfwCreateWindow(width, height, title, NULL, NULL);
-    if (!window)
+    double get_time()
     {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+        return glfwGetTime();
     }
 
-    glfwSetKeyCallback(window, keyCallback);
+    void create_window(const char* title) 
+    {
+        glfwSetErrorCallback(error_callback);
 
-    glfwMakeContextCurrent(window);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    glfwSwapInterval(1);
+        if (!glfwInit())
+            exit(EXIT_FAILURE);
 
-    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+        glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
+        glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 1 );
+        glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
+        glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE ); 
 
-    // TODO(shaw): OpenGL error checks have been omitted 
-}
+        window = glfwCreateWindow(width, height, title, NULL, NULL);
+        if (!window)
+        {
+            glfwTerminate();
+            exit(EXIT_FAILURE);
+        }
 
-int Display::getWidth() {
-    return width;
-}
+        glfwSetKeyCallback(window, key_callback);
 
-int Display::getHeight() {
-    return height;
-}
+        glfwMakeContextCurrent(window);
+        gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        glfwSwapInterval(1);
 
-GLFWwindow* Display::getWindow() {
-    return window;
-}
+        printf("OpenGL version: %s\n", glGetString(GL_VERSION));
 
-void Display::update() 
-{
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-}
+        // TODO(shaw): OpenGL error checks have been omitted 
+    }
 
-void Display::close() 
-{
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}
+    void update_time() {
+        current_frame_time = get_time();
+        frame_dt = (float)(current_frame_time - last_frame_time);
+        last_frame_time = current_frame_time;
+    }
 
-bool Display::windowShouldClose()
-{
-    return glfwWindowShouldClose(window);
+    void update() 
+    {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    void close() 
+    {
+        glfwDestroyWindow(window);
+        glfwTerminate();
+    }
+
+    bool window_should_close()
+    {
+        return glfwWindowShouldClose(window);
+    }
+
 }

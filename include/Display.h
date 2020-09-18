@@ -1,29 +1,24 @@
 #pragma once 
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class Display {
+namespace Display {
 
-private:
-    int width;
-    int height;
-    int fps_cap;
-    const char* title;
-    GLFWwindow* window;
+    extern int width;
+    extern int height;
+    extern int fps_cap;
+    extern double last_frame_time;
+    extern double current_frame_time;
+    extern float frame_dt;
+    extern GLFWwindow* window;
 
-public:
-    Display(const char* title, int width=1280, int height=720, int fps_cap=60);
-    bool windowShouldClose();
-    void createWindow();
+    //Display(const char* title, int width=1280, int height=720, int fps_cap=60);
+    bool window_should_close();
+    void create_window(const char* title);
     void update();
+    void update_time();
     void close();
-    double getTime();
-    int getWidth();
-    int getHeight();
-    GLFWwindow* getWindow();
+    double get_time();
 
-private:
-    static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-    static void errorCallback(int error, const char* description);
-
-};
+}

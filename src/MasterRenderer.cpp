@@ -1,11 +1,10 @@
 #include "MasterRenderer.h"
 #include "Light.h"
 #include "Camera.h"
-#include "Display.h"
 #include "Entity.h"
 
-MasterRenderer::MasterRenderer(Display& display) 
-    : projection_matrix(createProjectionMatrix(display.getWidth(), display.getHeight()))
+MasterRenderer::MasterRenderer(int width, int height) 
+    : projection_matrix(createProjectionMatrix(width, height))
     , renderer(shader, projection_matrix)
     , terrain_renderer(terrain_shader, projection_matrix)
 { 

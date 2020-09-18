@@ -19,10 +19,6 @@ glm::vec3 Entity::getScale() {
     return _scale;
 }
 
-void Entity::move(glm::vec3 movement) {
-    position += movement;
-}
-
 void Entity::move(float dx, float dy, float dz) {
     position.x += dx;
     position.y += dy;
@@ -41,3 +37,14 @@ void Entity::scale(float dx, float dy, float dz) {
     _scale.z += dz;
 }
 
+void Entity::move(glm::vec3 m) {
+    position += m;
+}
+
+void Entity::rotate(glm::vec3 r) {
+    rotation += r;
+}
+
+void Entity::scale(glm::vec3 s) {
+    _scale += s;
+}

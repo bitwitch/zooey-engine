@@ -2,7 +2,6 @@
 
 #include "glm_subset.h"
 
-// forward decl
 class TexturedModel;
 
 class Entity {
@@ -26,6 +25,8 @@ public:
     void move(float dx, float dy, float dz);
     void move(glm::vec3 movement);
     void rotate(float dx, float dy, float dz);
+    void rotate(glm::vec3 movement);
     void scale(float dx, float dy, float dz);
+    void scale(glm::vec3 movement);
 
 };
