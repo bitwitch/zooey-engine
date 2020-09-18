@@ -50,7 +50,11 @@ GLuint Loader::loadTexture(const char* filename)
 
     glTexImage2D(GL_TEXTURE_2D, 0, pixel_format, width, height, 0, pixel_format, GL_UNSIGNED_BYTE, 
             data);
+
+    // mipmapping
     glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -1); // decrease last parameter to reduce mipmapping
 
     stbi_image_free(data);
 
