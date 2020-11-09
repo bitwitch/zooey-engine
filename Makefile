@@ -9,7 +9,7 @@ SRCDIR      := src
 INCDIR      := include
 BUILDDIR    := obj
 TARGETDIR   := bin
-RESDIR      := res
+RESDIR      := data
 SRCEXT      := cpp
 DEPEXT      := d
 OBJEXT      := o
@@ -20,22 +20,19 @@ LIB         := -lglfw3 -framework Cocoa -framework IOKit -framework CoreVideo
 INC         := -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
 
-#---------------------------------------------------------------------------------
-#DO NOT EDIT BELOW THIS LINE
-#---------------------------------------------------------------------------------
 SOURCES     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT))) $(BUILDDIR)/glad.o
 
 #Defauilt Make
-#all: resources $(TARGET)
+all: resources $(TARGET)
 all: directories $(TARGET)
 
 #Remake
 remake: cleaner all
 
 #Copy Resources from Resources Directory to Target Directory
-#resources: directories
-	#@cp $(RESDIR)/* $(TARGETDIR)/
+resources: directories
+	@cp -r $(RESDIR) $(TARGETDIR)/
 
 #Make the Directories
 directories:
