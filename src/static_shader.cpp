@@ -42,8 +42,8 @@ void Static_Shader::load_light(Light* light) {
     load_vector(location_light_color, light->color);
 }
 
-void Static_Shader::load_sky_color(glm::vec3 color) {
-    load_vector(location_sky_color, color);
+void Static_Shader::load_sky_color(float r, float g, float b) {
+    load_vector(location_sky_color, glm::vec3(r, g, b));
 }
 
 void Static_Shader::load_shine_variables(GLfloat damper, GLfloat reflectivity) {

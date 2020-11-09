@@ -6,8 +6,8 @@
 
 Master_Renderer::Master_Renderer(Display* display) 
     : projection_matrix(create_projection_matrix(display->width, display->height))
-    , renderer(shader, projection_matrix)
-    , terrain_renderer(terrain_shader, projection_matrix)
+    , entity_renderer(&entity_shader, projection_matrix)
+    , terrain_renderer(&terrain_shader, projection_matrix)
 { 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -16,12 +16,12 @@ Master_Renderer::Master_Renderer(Display* display)
 void Master_Renderer::render(Light* light, Camera* camera) {
     clear();
 
-    shader.start();
-    shader.load_sky_color(SKY_R, SKY_G, SKY_B);
-    shader.load_light(light);
-    shader.load_view_matrix(camera);
-    renderer.render(entities);
-    shader.stop();
+    entity_shader.start();
+    entity_shader.load_sky_color(SKY_R, SKY_G, SKY_B);
+    entity_shader.load_light(light);
+    entity_shader.load_view_matrix(camera);
+    entity_renderer.render(entities);
+    entity_shader.stop();
 
     terrain_shader.start();
     terrain_shader.load_sky_color(SKY_R, SKY_G, SKY_B);

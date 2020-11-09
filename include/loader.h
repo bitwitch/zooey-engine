@@ -13,7 +13,7 @@ struct Loader {
 	std::vector<GLuint> textures;
 
     GLuint create_vao();
-    void store_data_in_attributes_list(GLuint attribute_number, GLuint coord_size, 
+    void store_data_in_attribute_list(GLuint attribute_number, GLuint coord_size, 
             std::vector<float> data);
     void bind_indices_buffer(std::vector<GLuint> indices);
     void unbind_vao();

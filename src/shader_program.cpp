@@ -122,11 +122,11 @@ void Shader_Program::load_bool(GLuint location, bool value) {
     glUniform1f(location, to_load);
 }
 
-void Shader_Program::load_matrix(GLuint location, const glm::mat4* matrix) {
+void Shader_Program::load_matrix(GLuint location, const glm::mat4 &matrix) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-GLuint Shader_Program::getUniformLocation(const char* uniformName) {
+GLuint Shader_Program::get_uniform_location(const char* uniformName) {
     return glGetUniformLocation(program_id, uniformName);
 }
 

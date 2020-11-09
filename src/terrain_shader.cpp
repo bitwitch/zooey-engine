@@ -1,4 +1,4 @@
-#include "Terrain_Shader.h"
+#include "terrain_shader.h"
 
 Terrain_Shader::Terrain_Shader() 
     : Shader_Program("data/shaders/terrain_vertex_shader.glsl", 
@@ -9,45 +9,45 @@ Terrain_Shader::Terrain_Shader()
 }
 
 void Terrain_Shader::bind_attributes() {
-    bindAttribute(0, "position");
-    bindAttribute(1, "tex_coords");
-    bindAttribute(2, "normal");
+    bind_attribute(0, "position");
+    bind_attribute(1, "tex_coords");
+    bind_attribute(2, "normal");
 }
 
 void Terrain_Shader::get_all_uniform_locations() {
-    location_transformation_matrix = getUniformLocation("transform");
-    location_projection_matrix = getUniformLocation("projection");
-    location_view_matrix = getUniformLocation("view");
-    location_light_position = getUniformLocation("light_position");
-    location_light_color = getUniformLocation("light_color");
-    location_shine_damper = getUniformLocation("shine_damper");
-    location_reflectivity = getUniformLocation("reflectivity");
-    location_sky_color = getUniformLocation("sky_color");
+    location_transformation_matrix = get_uniform_location("transform");
+    location_projection_matrix = get_uniform_location("projection");
+    location_view_matrix = get_uniform_location("view");
+    location_light_position = get_uniform_location("light_position");
+    location_light_color = get_uniform_location("light_color");
+    location_shine_damper = get_uniform_location("shine_damper");
+    location_reflectivity = get_uniform_location("reflectivity");
+    location_sky_color = get_uniform_location("sky_color");
 }
 
 void Terrain_Shader::load_transformation_matrix(glm::mat4 matrix) {
-    loadMatrix(location_transformation_matrix, matrix);
+    load_matrix(location_transformation_matrix, matrix);
 }
 
 void Terrain_Shader::load_projection_matrix(glm::mat4 matrix) {
-    loadMatrix(location_projection_matrix, matrix);
+    load_matrix(location_projection_matrix, matrix);
 }
 
-void Terrain_Shader::load_view_matrix(Camera& camera) {
-    glm::mat4 view_matrix = Maths::createViewMatrix(camera);
-    loadMatrix(location_view_matrix, view_matrix);
+void Terrain_Shader::load_view_matrix(Camera* camera) {
+    glm::mat4 view_matrix = Maths::create_view_matrix(camera);
+    load_matrix(location_view_matrix, view_matrix);
 }
 
-void Terrain_Shader::load_light(Light& light) {
-    loadVector(location_light_position, light.getPosition());
-    loadVector(location_light_color, light.getColor());
+void Terrain_Shader::load_light(Light* light) {
+    load_vector(location_light_position, light->position);
+    load_vector(location_light_color, light->color);
 }
 
 void Terrain_Shader::load_sky_color(float r, float g, float b) {
-    loadVector(location_sky_color, glm::vec3(r, g, b));
+    load_vector(location_sky_color, glm::vec3(r, g, b));
 }
 
 void Terrain_Shader::load_shine_variables(GLfloat damper, GLfloat reflectivity) {
-    loadFloat(location_shine_damper, damper);
-    loadFloat(location_reflectivity, reflectivity);
+    load_float(location_shine_damper, damper);
+    load_float(location_reflectivity, reflectivity);
 }

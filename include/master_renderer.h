@@ -11,10 +11,10 @@ struct Camera;
 struct Light;
 
 
-#include "Static_Shader.h"
-#include "Entity_Renderer.h"
-#include "Terrain_Shader.h"
-#include "Terrain_Renderer.h"
+#include "static_shader.h"
+#include "entity_renderer.h"
+#include "terrain_shader.h"
+#include "terrain_renderer.h"
 
 
 struct Master_Renderer {
@@ -29,8 +29,8 @@ struct Master_Renderer {
 
     glm::mat4 projection_matrix;
 
-    Static_Shader shader;
-    Entity_Renderer renderer;
+    Static_Shader entity_shader;
+    Entity_Renderer entity_renderer;
 
     Terrain_Shader terrain_shader;
     Terrain_Renderer terrain_renderer;

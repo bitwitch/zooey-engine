@@ -22,7 +22,7 @@ struct Shader_Program {
     void load_float(GLuint location, GLfloat value);
     void load_vector(GLuint location, glm::vec3 vector);
     void load_bool(GLuint location, bool value);
-    void load_matrix(GLuint location, const glm::mat4* matrix);
+    void load_matrix(GLuint location, const glm::mat4 &matrix);
 
     Shader_Program(const char* vert_path, const char* frag_path);
     ~Shader_Program();

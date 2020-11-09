@@ -1,4 +1,4 @@
-#include "obj_oader.h"
+#include "obj_loader.h"
 
 #include "glm_subset.h"
 #include <sstream>
@@ -10,8 +10,9 @@
 #include <iostream> 
 
 #include "loader.h"
+#include "raw_model.h"
 
-Raw_Model OBJLoader::loadObjModel(std::string filename) {
+Raw_Model load_obj_model(std::string filename, Loader *loader) {
 
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> texture_coords;
@@ -110,6 +111,6 @@ Raw_Model OBJLoader::loadObjModel(std::string filename) {
             indices_array.push_back(index_number++);
     }
 
-    return loader.loadToVAO(vertices_array, texture_coords_array, normals_array, indices_array);
+    return loader->load_to_vao(vertices_array, texture_coords_array, normals_array, indices_array);
 }
 

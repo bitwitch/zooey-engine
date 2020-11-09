@@ -1,53 +1,55 @@
 #include "entity_renderer.h"
 #include "static_shader.h"
-#include "Raw_Model.h"
-#include "Model_Texture.h"
-#include "Textured_Model.h"
+#include "raw_model.h"
+#include "model_texture.h"
+#include "textured_model.h"
 #include "entity.h"
 
-EntityRenderer::EntityRenderer (StaticShader& shader, glm::mat4 projection_matrix) 
+Entity_Renderer::Entity_Renderer (Static_Shader* shader, glm::mat4 projection_matrix) 
     : shader(shader) 
 {
-    shader.start();
-    shader.load_projection_matrix(projection_matrix);
-    shader.stop();
+    shader->start();
+    shader->load_projection_matrix(projection_matrix);
+    shader->stop();
 }
 
-void EntityRenderer::prepareTextured_Model(Textured_Model& model) {
-    Raw_Model& raw_model = model.getRaw_Model();
-    glBindVertexArray(raw_model.getVaoId());
+void Entity_Renderer::prepare_textured_model(Textured_Model* model) {
+    Raw_Model* raw_model = model->raw_model;
+
+    glBindVertexArray(raw_model->vao_id);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-    Model_Texture& texture = model.getTexture();
-    shader.load_shine_variables(texture.getShineDamper(), texture.getReflectivity());
+    Model_Texture* texture = model->texture;
+    shader->load_shine_variables(texture->shine_damper, texture->reflectivity);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, model.getTexture().getId());
+    glBindTexture(GL_TEXTURE_2D, model->texture->id);
 }
 
-void EntityRenderer::unbindTextured_Model() {
+void Entity_Renderer::unbind_textured_model() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
 }
 
-void EntityRenderer::prepareInstance(Entity& entity) {
-    glm::mat4 transformation_matrix = Maths::createTransformationMatrix(
-            entity.getPosition(), entity.getRotation(), entity.getScale());
-    shader.load_transformation_matrix(transformation_matrix);
+void Entity_Renderer::prepare_instance(Entity* entity) {
+    glm::mat4 transformation_matrix = Maths::create_transformation_matrix(
+            entity->position, entity->rotation, entity->my_scale);
+    shader->load_transformation_matrix(transformation_matrix);
 }
 
-void EntityRenderer::render(std::map<Textured_Model*, std::vector<Entity*>>& entities) {
+// TODO(shaw): research a little, passing vectors as parameters
+void Entity_Renderer::render(std::map<Textured_Model*, std::vector<Entity*>>& entities) {
     for (auto& entry: entities) {
         Textured_Model* model = entry.first;
         std::vector<Entity*> batch = entry.second;
-        prepareTextured_Model(*model);
+        prepare_textured_model(model);
         for (auto& entity: batch) {
-            prepareInstance(*entity);
-            glDrawElements(GL_TRIANGLES, model->getRaw_Model().getVertexCount(), GL_UNSIGNED_INT, 0);
+            prepare_instance(entity);
+            glDrawElements(GL_TRIANGLES, model->raw_model->vertex_count, GL_UNSIGNED_INT, 0);
         }
-        unbindTextured_Model();
+        unbind_textured_model();
     }
 }
 

@@ -1,7 +1,7 @@
 #include "maths.h"
 #include "camera.h"
 
-glm::mat4 Maths::createTransformationMatrix(
+glm::mat4 Maths::create_transformation_matrix(
         glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale)
 {
     glm::mat4 matrix = glm::mat4(1.0);
@@ -13,13 +13,13 @@ glm::mat4 Maths::createTransformationMatrix(
     return matrix;
 }
 
-glm::mat4 Maths::createViewMatrix(Camera& camera)
+glm::mat4 Maths::create_view_matrix(Camera* camera)
 {
     glm::mat4 matrix = glm::mat4(1.0);
-    matrix = glm::rotate(matrix, glm::radians(camera.getRotation().x), glm::vec3(1.0f,0.0f,0.0f));
-    matrix = glm::rotate(matrix, glm::radians(camera.getRotation().y), glm::vec3(0.0f,1.0f,0.0f));
-    matrix = glm::rotate(matrix, glm::radians(camera.getRotation().z), glm::vec3(0.0f,0.0f,1.0f));
-    matrix = glm::translate(matrix, -camera.getPosition());
+    matrix = glm::rotate(matrix, glm::radians(camera->rotation.x), glm::vec3(1.0f,0.0f,0.0f));
+    matrix = glm::rotate(matrix, glm::radians(camera->rotation.y), glm::vec3(0.0f,1.0f,0.0f));
+    matrix = glm::rotate(matrix, glm::radians(camera->rotation.z), glm::vec3(0.0f,0.0f,1.0f));
+    matrix = glm::translate(matrix, -camera->position);
     return matrix;
 }
 

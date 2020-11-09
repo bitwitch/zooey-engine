@@ -45,7 +45,7 @@ void Display::create_window()
         exit(EXIT_FAILURE);
     }
 
-    glfwSetKeyCallback(window, keyCallback);
+    glfwSetKeyCallback(window, key_callback);
 
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);

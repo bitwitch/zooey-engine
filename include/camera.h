@@ -9,7 +9,7 @@ struct Camera {
     glm::vec3 rotation { 10, 0, 0 };
     GLFWwindow* window;
 
-    Camera(GLFWwindow* _window) { window = _window };
+    Camera(GLFWwindow* _window) { window = _window; }
     void move();
 };
 

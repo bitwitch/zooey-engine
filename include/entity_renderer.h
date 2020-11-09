@@ -15,11 +15,11 @@ struct Entity;
 
 struct Entity_Renderer {
 
-    Static_Shader& shader;
+    Static_Shader* shader;
 
-    void prepare_textured_model(Textured_Model& model);
+    Entity_Renderer(Static_Shader* shader, glm::mat4 projection_matrix);
+    void prepare_textured_model(Textured_Model* model);
     void unbind_textured_model();
-    void prepare_instance(Entity& entity);
-    Entity_Renderer(Static_Shader& shader, glm::mat4 projection_matrix);
+    void prepare_instance(Entity* entity);
     void render(std::map<Textured_Model*, std::vector<Entity*>>& entities);
 };

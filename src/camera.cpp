@@ -1,6 +1,6 @@
 #include "camera.h"
 
-void move(Camera* camera) {
+void Camera::move() {
     float multiplier = 5.0f;
     if (glfwGetKey(window, GLFW_KEY_W))
         position.z -= 0.2f * multiplier;
@@ -22,13 +22,5 @@ void move(Camera* camera) {
     if (glfwGetKey(window, GLFW_KEY_E))
         rotation.y += 0.2f * multiplier;
 
-}
-
-glm::vec3 Camera::getRotation() {
-    return rotation;
-}
-
-glm::vec3 Camera::getPosition() {
-    return position;
 }
 
