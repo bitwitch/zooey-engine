@@ -2,17 +2,15 @@
 
 #include "glm_subset.h"
 
-class Camera; 
+struct Camera; 
 
-class Maths {
-
-public:
+struct Maths {
 
     static glm::mat4 
-    createTransformationMatrix(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale);
+    create_transformation_matrix(glm::vec3 translation, glm::vec3 rotation, glm::vec3 scale);
 
     static glm::mat4 
-    createViewMatrix(Camera& camera);
+    create_view_matrix(Camera* camera);
 
     static glm::vec3 
     lerp(glm::vec3 a, glm::vec3 b, float amount);

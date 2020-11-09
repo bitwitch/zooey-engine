@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "Display.h"
+#include "display.h"
 
 Display::Display(const char* title, int width, int height, int fps_cap) {
     this->title = title;
@@ -9,26 +9,26 @@ Display::Display(const char* title, int width, int height, int fps_cap) {
     this->fps_cap = fps_cap;
 }
 
-void Display::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Display::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
 }
 
-void Display::errorCallback(int error, const char* description)
+void Display::error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error: %s\n", description);
 }
 
-double Display::getTime()
+double Display::get_time()
 {
     return glfwGetTime();
 }
 
-void Display::createWindow() 
+void Display::create_window() 
 {
-    glfwSetErrorCallback(errorCallback);
+    glfwSetErrorCallback(error_callback);
 
     if (!glfwInit())
         exit(EXIT_FAILURE);
@@ -56,18 +56,6 @@ void Display::createWindow()
     // TODO(shaw): OpenGL error checks have been omitted 
 }
 
-int Display::getWidth() {
-    return width;
-}
-
-int Display::getHeight() {
-    return height;
-}
-
-GLFWwindow* Display::getWindow() {
-    return window;
-}
-
 void Display::update() 
 {
     glfwSwapBuffers(window);
@@ -80,7 +68,7 @@ void Display::close()
     glfwTerminate();
 }
 
-bool Display::windowShouldClose()
+bool Display::window_should_close()
 {
     return glfwWindowShouldClose(window);
 }

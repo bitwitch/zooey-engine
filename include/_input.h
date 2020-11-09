@@ -12,7 +12,7 @@
 //};
 
 
-//class Input {
+//struct Input {
 
 //private:
     //std::map<> keyBindings;

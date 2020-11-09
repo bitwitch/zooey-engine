@@ -1,25 +1,25 @@
-#include "Loader.h"
+#include "loader.h"
 
 #include <stdlib.h>
 #include <algorithm>
-#include "RawModel.h"
+#include "raw_model.h"
 #include "stb_image.h"
 
-RawModel Loader::loadToVAO(std::vector<GLfloat> positions, 
-                           std::vector<GLfloat> tex_coords, 
-                           std::vector<GLfloat> normals, 
-                           std::vector<GLuint> indices) 
+Raw_Model Loader::load_to_vao(std::vector<GLfloat> positions, 
+                              std::vector<GLfloat> tex_coords, 
+                              std::vector<GLfloat> normals, 
+                              std::vector<GLuint> indices) 
 {
-    GLuint vao_id = createVAO();
-    bindIndicesBuffer(indices);
-    storeDataInAttributeList(0, 3, positions);
-    storeDataInAttributeList(1, 2, tex_coords);
-    storeDataInAttributeList(2, 3, normals);
-    unbindVAO();
-    return RawModel(vao_id, indices.size());
+    GLuint vao_id = create_vao();
+    bind_indices_buffer(indices);
+    store_data_in_attribute_list(0, 3, positions);
+    store_data_in_attribute_list(1, 2, tex_coords);
+    store_data_in_attribute_list(2, 3, normals);
+    unbind_vao();
+    return Raw_Model(vao_id, indices.size());
 }
 
-GLuint Loader::loadTexture(const char* filename) 
+GLuint Loader::load_texture(const char* filename) 
 {
     GLuint texture_id;
     glGenTextures(1, &texture_id);
@@ -32,19 +32,19 @@ GLuint Loader::loadTexture(const char* filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     // load image
-    int width, height, nuchannels;
+    int width, height, num_channels;
     char full_filename[100];
     sprintf(full_filename, "data/textures/%s", filename);
 
-    unsigned char* data = stbi_load(full_filename, &width, &height, &nuchannels, 0);
+    unsigned char* data = stbi_load(full_filename, &width, &height, &num_channels, 0);
 
     if (!data) {
         printf("Failed to load texture\n");
-        data = stbi_load("data/textures/source_fail.png", &width, &height, &nuchannels, 0);
+        data = stbi_load("data/textures/source_fail.png", &width, &height, &num_channels, 0);
     }
 
     GLenum pixel_format = GL_RGB;
-    if (nuchannels == 4) {
+    if (num_channels == 4) {
         pixel_format = GL_RGBA;
     }
 
@@ -62,7 +62,7 @@ GLuint Loader::loadTexture(const char* filename)
     return texture_id;
 }
 
-GLuint Loader::createVAO() {
+GLuint Loader::create_vao() {
     GLuint vao_id;
     glGenVertexArrays(1, &vao_id);
     vaos.push_back(vao_id);
@@ -70,9 +70,9 @@ GLuint Loader::createVAO() {
     return vao_id;
 }
 
-void Loader::storeDataInAttributeList(GLuint attribute_number, 
-                                      GLuint coord_size, 
-                                      std::vector<float> data) 
+void Loader::store_data_in_attribute_list(GLuint attribute_number, 
+                                          GLuint coord_size, 
+                                          std::vector<float> data) 
 { 
     GLuint vbo_id;
     size_t byte_length = sizeof(float) * data.size();
@@ -84,11 +84,11 @@ void Loader::storeDataInAttributeList(GLuint attribute_number,
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Loader::unbindVAO() {
+void Loader::unbind_vao() {
     glBindVertexArray(0);
 }
 
-void Loader::bindIndicesBuffer(std::vector<GLuint> indices) {
+void Loader::bind_indices_buffer(std::vector<GLuint> indices) {
     GLuint vbo_id;
     size_t byte_length = sizeof(GLuint) * indices.size();
     glGenBuffers(1, &vbo_id);
@@ -97,7 +97,7 @@ void Loader::bindIndicesBuffer(std::vector<GLuint> indices) {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, byte_length, indices.data(), GL_STATIC_DRAW);
 }
 
-void Loader::cleanUp() {
+void Loader::clean_up() {
     // NOTE(shaw): the docs for opengl says that the second arguments here is
     // an "array containing the n names of the objects to be deleted", i am
     // just using the ids here, is this correct?

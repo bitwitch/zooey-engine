@@ -1,4 +1,4 @@
-#include "OBJLoader.h"
+#include "obj_oader.h"
 
 #include "glm_subset.h"
 #include <sstream>
@@ -9,9 +9,9 @@
 #include <cstdlib>
 #include <iostream> 
 
+#include "loader.h"
 
-
-RawModel OBJLoader::loadObjModel(std::string filename, Loader loader) {
+Raw_Model OBJLoader::loadObjModel(std::string filename) {
 
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> texture_coords;

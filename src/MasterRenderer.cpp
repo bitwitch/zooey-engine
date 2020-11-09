@@ -1,11 +1,11 @@
-#include "MasterRenderer.h"
-#include "Light.h"
-#include "Camera.h"
-#include "Display.h"
-#include "Entity.h"
+#include "master_renderer.h"
+#include "light.h"
+#include "camera.h"
+#include "display.h"
+#include "entity.h"
 
-MasterRenderer::MasterRenderer(Display& display) 
-    : projection_matrix(createProjectionMatrix(display.getWidth(), display.getHeight()))
+Master_Renderer::Master_Renderer(Display* display) 
+    : projection_matrix(create_projection_matrix(display->width, display->height))
     , renderer(shader, projection_matrix)
     , terrain_renderer(terrain_shader, projection_matrix)
 { 
@@ -13,20 +13,20 @@ MasterRenderer::MasterRenderer(Display& display)
     glCullFace(GL_BACK);
 }
 
-void MasterRenderer::render(Light& light, Camera& camera) {
+void Master_Renderer::render(Light* light, Camera* camera) {
     clear();
 
     shader.start();
-    shader.loadSkyColor(SKY_R, SKY_G, SKY_B);
-    shader.loadLight(light);
-    shader.loadViewMatrix(camera);
+    shader.load_sky_color(SKY_R, SKY_G, SKY_B);
+    shader.load_light(light);
+    shader.load_view_matrix(camera);
     renderer.render(entities);
     shader.stop();
 
     terrain_shader.start();
-    terrain_shader.loadSkyColor(SKY_R, SKY_G, SKY_B);
-    terrain_shader.loadLight(light);
-    terrain_shader.loadViewMatrix(camera);
+    terrain_shader.load_sky_color(SKY_R, SKY_G, SKY_B);
+    terrain_shader.load_light(light);
+    terrain_shader.load_view_matrix(camera);
     terrain_renderer.render(terrains);
     terrain_shader.stop();
 
@@ -34,37 +34,37 @@ void MasterRenderer::render(Light& light, Camera& camera) {
     terrains.clear();
 }
 
-void MasterRenderer::processEntity(Entity& entity) {
-    TexturedModel& model = entity.getModel();
+void Master_Renderer::process_entity(Entity* entity) {
+    Textured_Model* model = entity->model;
 
-    if (entities.count(&model)) {
-        entities[&model].push_back(&entity);
+    if (entities.count(model)) {
+        entities[model].push_back(entity);
     } else {
         std::vector<Entity*> new_batch;
-        new_batch.push_back(&entity);
-        entities[&model] = new_batch;
+        new_batch.push_back(entity);
+        entities[model] = new_batch;
     } 
 }
 
-void MasterRenderer::processTerrain(Terrain& terrain) {
-    terrains.push_back(&terrain);
+void Master_Renderer::process_terrain(Terrain* terrain) {
+    terrains.push_back(terrain);
 }
 
-glm::mat4 MasterRenderer::createProjectionMatrix(int width, int height) {
+glm::mat4 Master_Renderer::create_projection_matrix(int width, int height) {
     glm::mat4 projection_matrix = glm::mat4(1.0);
     float aspect = (float)width / (float)height;
     float y_scale = (float)((1.0f / tan(glm::radians(0.5f * FOV))) * aspect);
     float x_scale = y_scale / aspect;
-    float frustulength = FAR_PLANE - NEAR_PLANE;
+    float frustum_length = FAR_PLANE - NEAR_PLANE;
 
     projection_matrix[0] = glm::vec4(x_scale, 0, 0, 0);
     projection_matrix[1] = glm::vec4(0, y_scale, 0, 0);
-    projection_matrix[2] = glm::vec4(0, 0, -(FAR_PLANE + NEAR_PLANE)/frustulength, -1);
-    projection_matrix[3] = glm::vec4(0, 0, -(2 * NEAR_PLANE * FAR_PLANE)/frustulength, 0);
+    projection_matrix[2] = glm::vec4(0, 0, -(FAR_PLANE + NEAR_PLANE)/frustum_length, -1);
+    projection_matrix[3] = glm::vec4(0, 0, -(2 * NEAR_PLANE * FAR_PLANE)/frustum_length, 0);
     return projection_matrix;
 }
 
-void MasterRenderer::clear() {
+void Master_Renderer::clear() {
     glEnable(GL_DEPTH_TEST);
     //glClearColor(0, 0, 0, 1);
     //glClearColor(59/255.0f, 0/255.0f, 0/255.0f, 1); // red

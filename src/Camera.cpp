@@ -1,8 +1,6 @@
-#include "Camera.h"
+#include "camera.h"
 
-Camera::Camera(GLFWwindow* window) : window(window) {}
-
-void Camera::move() {
+void move(Camera* camera) {
     float multiplier = 5.0f;
     if (glfwGetKey(window, GLFW_KEY_W))
         position.z -= 0.2f * multiplier;

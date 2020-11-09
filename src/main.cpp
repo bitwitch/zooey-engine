@@ -4,18 +4,18 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Display.h"
-#include "Entity.h"
-#include "Terrain.h"
-#include "Loader.h"
-#include "ModelTexture.h"
-#include "TexturedModel.h"
-#include "MasterRenderer.h"
-#include "StaticShader.h"
-#include "OBJLoader.h"
-#include "Light.h"
-#include "Random.h"
-#include "Maths.h"
+#include "display.h"
+#include "entity.h"
+#include "terrain.h"
+#include "loader.h"
+#include "Model_Texture.h"
+#include "Textured_Model.h"
+#include "master_renderer.h"
+#include "static_shader.h"
+#include "OBJloader.h"
+#include "light.h"
+#include "random.h"
+#include "maths.h"
 
 int main(int argc, char** argv) 
 {
@@ -31,12 +31,12 @@ int main(int argc, char** argv)
     Camera camera = Camera(display.getWindow());
 
     // Cubes
-    RawModel cube_raw = OBJLoader::loadObjModel("cube", loader);
-    //ModelTexture cube_texture = ModelTexture(loader.loadTexture("grass_block.png"));
-    ModelTexture cube_texture = ModelTexture(loader.loadTexture("error_texture.png"));
+    Raw_Model cube_raw = OBJLoader::loadObjModel("cube", loader);
+    //Model_Texture cube_texture = Model_Texture(loader.loadTexture("grass_block.png"));
+    Model_Texture cube_texture = Model_Texture(loader.loadTexture("error_texture.png"));
     cube_texture.setShineDamper(20);
     cube_texture.setReflectivity(0.4);
-    TexturedModel cube_model = TexturedModel(cube_raw, cube_texture);
+    Textured_Model cube_model = Textured_Model(cube_raw, cube_texture);
 
     std::vector<Entity> cubes;
     std::vector<glm::vec3> cube_starts;
@@ -60,17 +60,17 @@ int main(int argc, char** argv)
     }
 
     // Dragons
-    RawModel dragon_raw = OBJLoader::loadObjModel("dragon", loader);
-    ModelTexture dragon_texture = ModelTexture(loader.loadTexture("bronze.png"));
+    Raw_Model dragon_raw = OBJLoader::loadObjModel("dragon", loader);
+    Model_Texture dragon_texture = Model_Texture(loader.loadTexture("bronze.png"));
     dragon_texture.setShineDamper(10);
     dragon_texture.setReflectivity(0.85);
-    TexturedModel dragon_model = TexturedModel(dragon_raw, dragon_texture);
+    Textured_Model dragon_model = Textured_Model(dragon_raw, dragon_texture);
     Entity dragon = Entity(dragon_model, glm::vec3(-30, 0, -50), glm::vec3(0, 0, 0));
 
 
     // Terrain
-    ModelTexture terrain_texture = ModelTexture(loader.loadTexture("grass.png"));
-    //ModelTexture terrain_texture2 = ModelTexture(loader.loadTexture("ground_grass_gen_10.png"));
+    Model_Texture terrain_texture = Model_Texture(loader.loadTexture("grass.png"));
+    //Model_Texture terrain_texture2 = Model_Texture(loader.loadTexture("ground_grass_gen_10.png"));
     Terrain terrain1 = Terrain(0, 0, loader, terrain_texture);
     Terrain terrain2 = Terrain(0, 1, loader, terrain_texture);
     Terrain terrain3 = Terrain(1, 0, loader, terrain_texture);

@@ -1,9 +1,9 @@
-#include "ShaderProgram.h"
+#include "shader_program.h"
 
-ShaderProgram::ShaderProgram(const char* vert_path, const char* frag_path) 
+Shader_Program::Shader_Program(const char* vert_path, const char* frag_path) 
 {
-    vertex_shader_id = loadShader(vert_path, GL_VERTEX_SHADER);
-    fragment_shader_id = loadShader(frag_path, GL_FRAGMENT_SHADER);
+    vertex_shader_id = load_shader(vert_path, GL_VERTEX_SHADER);
+    fragment_shader_id = load_shader(frag_path, GL_FRAGMENT_SHADER);
     program_id = glCreateProgram();
     glAttachShader(program_id, vertex_shader_id);
     glAttachShader(program_id, fragment_shader_id);
@@ -24,17 +24,17 @@ ShaderProgram::ShaderProgram(const char* vert_path, const char* frag_path)
 	}
 }
 
-void ShaderProgram::start() 
+void Shader_Program::start() 
 {
     glUseProgram(program_id);
 }
 
-void ShaderProgram::stop() 
+void Shader_Program::stop() 
 {
     glUseProgram(0);
 }
 
-ShaderProgram::~ShaderProgram()
+Shader_Program::~Shader_Program()
 {
     stop();
     glDetachShader(program_id, vertex_shader_id);
@@ -44,11 +44,11 @@ ShaderProgram::~ShaderProgram()
     glDeleteProgram(program_id);
 }
 
-void ShaderProgram::bindAttribute(GLuint attribute, const char* name) {
+void Shader_Program::bind_attribute(GLuint attribute, const char* name) {
     glBindAttribLocation(program_id, attribute, name);
 }
 
-GLuint ShaderProgram::loadShader(const char* filename, GLenum shader_type) 
+GLuint Shader_Program::load_shader(const char* filename, GLenum shader_type) 
 {
     // read shader file into a buffer
     char *buffer = NULL;
@@ -107,26 +107,26 @@ GLuint ShaderProgram::loadShader(const char* filename, GLenum shader_type)
 	return shader;
 }
 
-void ShaderProgram::loadFloat(GLuint location, GLfloat value) {
+void Shader_Program::load_float(GLuint location, GLfloat value) {
     glUniform1f(location, value);
 }
 
-void ShaderProgram::loadVector(GLuint location, glm::vec3 vector) {
+void Shader_Program::load_vector(GLuint location, glm::vec3 vector) {
     glUniform3f(location, vector.x, vector.y, vector.z);
 }
 
-void ShaderProgram::loadBool(GLuint location, bool value) {
+void Shader_Program::load_bool(GLuint location, bool value) {
     GLfloat to_load = 0;
     if (value)
         to_load = 1;
     glUniform1f(location, to_load);
 }
 
-void ShaderProgram::loadMatrix(GLuint location, const glm::mat4& matrix) {
+void Shader_Program::load_matrix(GLuint location, const glm::mat4* matrix) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-GLuint ShaderProgram::getUniformLocation(const char* uniformName) {
+GLuint Shader_Program::getUniformLocation(const char* uniformName) {
     return glGetUniformLocation(program_id, uniformName);
 }
 
