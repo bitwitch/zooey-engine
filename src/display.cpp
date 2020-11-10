@@ -9,12 +9,12 @@ Display::Display(const char* title, int width, int height, int fps_cap) {
     this->fps_cap = fps_cap;
 }
 
-void Display::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-}
+//void Display::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+//{
+    //if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        //glfwSetWindowShouldClose(window, GLFW_TRUE);
+    //}
+//}
 
 void Display::error_callback(int error, const char* description)
 {
@@ -45,7 +45,7 @@ void Display::create_window()
         exit(EXIT_FAILURE);
     }
 
-    glfwSetKeyCallback(window, key_callback);
+    //glfwSetKeyCallback(window, key_callback);
 
     glfwMakeContextCurrent(window);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -56,10 +56,17 @@ void Display::create_window()
     // TODO(shaw): OpenGL error checks have been omitted 
 }
 
-void Display::update() 
+
+void Display::update() {
+    glfwPollEvents();
+    current_frame_time = get_time();
+    frame_dt = current_frame_time - last_frame_time;
+    last_frame_time = current_frame_time;
+}
+
+void Display::swap_buffers() 
 {
     glfwSwapBuffers(window);
-    glfwPollEvents();
 }
 
 void Display::close() 

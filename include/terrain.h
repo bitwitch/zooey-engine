@@ -8,7 +8,6 @@
 struct Model_Texture;
 struct Loader;
 
-
 struct Terrain {
     
     constexpr static GLfloat SIZE = 800;
@@ -20,4 +19,7 @@ struct Terrain {
     Raw_Model generate_terrain(Loader* loader);
 
     Terrain(int grid_x, int grid_y, Loader* loader, Model_Texture* texture);
+
 };
+
+

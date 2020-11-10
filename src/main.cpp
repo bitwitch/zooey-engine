@@ -8,6 +8,7 @@
 #include "entity.h"
 #include "terrain.h"
 #include "loader.h"
+#include "input.h"
 #include "model_texture.h"
 #include "textured_model.h"
 #include "master_renderer.h"
@@ -16,57 +17,33 @@
 #include "light.h"
 #include "random.h"
 #include "maths.h"
+#include "player.h"
 
 int main(int argc, char** argv) 
 {
-    Display display = Display("Demo");
+    Display display = Display("Messenger");
     display.create_window();
+
     Loader loader = Loader();
+
+    Input::init(display.window);
+    Input input = Input();
+
 
     //double lastTime = display.getTime();
     //int nbFrames = 0;
 
-    Light light = Light(glm::vec3(20000,20000,2000), glm::vec3(1,1,1));
+    Light light = Light(glm::vec3(0,20000,20000), glm::vec3(1,1,1));
 
     Camera camera = Camera(display.window);
 
-    // Cubes
-    Raw_Model cube_raw = load_obj_model("cube", &loader);
-    //Model_Texture cube_texture = Model_Texture(loader.load_texture("grass_block.png"));
-    Model_Texture cube_texture = Model_Texture(loader.load_texture("error_texture.png"));
-    cube_texture.shine_damper = 20;
-    cube_texture.reflectivity = 0.4;
-    Textured_Model cube_model = Textured_Model(&cube_raw, &cube_texture);
-
-    std::vector<Entity> cubes;
-    std::vector<glm::vec3> cube_starts;
-    std::vector<glm::vec3> cube_targets;
-    std::vector<glm::vec3> cube_rotations;
-
-    for (int i=0; i<13; i++) {
-        for (int j=0; j<13; j++) {
-            for (int k=0; k<13; k++) {
-                Entity cube = Entity(&cube_model, glm::vec3(-3*i, 3*j+2, -3*k));
-                cubes.push_back(cube);
-                cube_starts.push_back(cube.position);
-                cube_targets.push_back(glm::vec3(Random::integer(-200, 200), 
-                                                  Random::integer(2, 200), 
-                                                  Random::integer(0, -200)));
-                cube_rotations.push_back(glm::vec3(Random::integer(0, 360), 
-                                                   Random::integer(0, 360), 
-                                                   Random::integer(0, 360)));
-            }
-        }
-    }
-
-    // Dragons
-    Raw_Model dragon_raw = load_obj_model("dragon", &loader);
-    Model_Texture dragon_texture = Model_Texture(loader.load_texture("bronze.png"));
-    dragon_texture.shine_damper = 10;
-    dragon_texture.reflectivity = 0.85;
-    Textured_Model dragon_model = Textured_Model(&dragon_raw, &dragon_texture);
-    Entity dragon = Entity(&dragon_model, glm::vec3(-30, 0, -50), glm::vec3(0, 0, 0));
-
+    // Player
+    Raw_Model player_raw = load_obj_model("cube", &loader);
+    Model_Texture player_texture = Model_Texture(loader.load_texture("bronze.png"));
+    player_texture.shine_damper = 10;
+    player_texture.reflectivity = 0.1;
+    Textured_Model player_model = Textured_Model(&player_raw, &player_texture);
+    Entity player = Entity(&player_model, glm::vec3(0, 0.5, -20), glm::vec3(0, 0, 0));
 
     // Terrain
     Model_Texture terrain_texture = Model_Texture(loader.load_texture("grass.png"));
@@ -78,84 +55,25 @@ int main(int argc, char** argv)
 
     Master_Renderer renderer = Master_Renderer(&display);
 
-
-    // random demo variables
-    bool reset = false;
-    bool explode = false;
-    bool rotated = false;
-    float explosion_speed = 0.05f;
-    bool cube_mode = true; // false == dragon_mode
-    bool dragon_rotate = false;
-    GLFWwindow* window = display.window;
-
-
-
     while (!display.window_should_close())
     {
-        //logSecondsPerFrame(lastTime, nbFrames);
+        input.update_keyboard(); // needs to happen before Display::update() which polls events
 
-        if (glfwGetKey(window, GLFW_KEY_7)) {
-            cube_mode = !cube_mode;
-            reset = true;
-        }
-
-        if (glfwGetKey(window, GLFW_KEY_0))
-            reset = true;
-
-        if (reset) {
-            explode = false;
-            rotated = false;
-            reset = false;
-            dragon_rotate = false;
-            for (int i=0; i<cubes.size(); i++) { 
-                auto& cube = cubes[i];
-                auto start = cube_starts[i];
-                cube.position = start;
-                cube.rotation = glm::vec3(0,0,0);
-            }
-        }
-
-        if (glfwGetKey(window, GLFW_KEY_8))
-            explode = true;
-
-        if (glfwGetKey(window, GLFW_KEY_6))
-            dragon_rotate = !dragon_rotate;
+        display.update();
 
         camera.move();
+        update_player(&player, &input, display.frame_dt);
 
         renderer.process_terrain(&terrain1);
         renderer.process_terrain(&terrain2);
         renderer.process_terrain(&terrain3);
         renderer.process_terrain(&terrain4);
 
-        if (explode && !rotated) {
-            for (int i=0; i<cubes.size(); i++) { 
-                auto& cube = cubes[i];
-                cube.rotation = cube_rotations[i];
-            }
-            rotated = true;
-        }
-
-        if (cube_mode) {
-            for (int i=0; i<cubes.size(); i++) { 
-                auto& cube = cubes[i];
-                if (explode) {
-                    auto target = cube_targets[i];
-                    glm::vec3 movement = (target - cube.position) * explosion_speed;
-                    cube.move(movement);
-                    cube.rotate(glm::vec3(1, 2, 3));
-                }
-                renderer.process_entity(&cube);
-            }
-        } else {
-            if (dragon_rotate) 
-                dragon.rotate(glm::vec3(0,1,0));
-            renderer.process_entity(&dragon);
-        }
+        renderer.process_entity(&player);
 
         renderer.render(&light, &camera);
 
-        display.update();
+        display.swap_buffers();
     }
 
     loader.clean_up();
