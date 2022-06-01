@@ -1,41 +1,52 @@
-#Compiler and Linker
-CC          := clang++
+ifeq ($(OS),Windows_NT)
+    detected_os := Windows
+else
+    detected_os := $(shell uname)
+endif
 
-#The Target Binary Program
+ifeq ($(detected_os),Windows)
+	$(warning Building on windows not currently supported)
+	C      := failhere
+	CC     := failhere
+	LIB    := failhere
+endif
+ifeq ($(detected_os),Darwin) # Mac OS X
+	C      := clang
+	CC     := clang++
+	CFLAGS := -Wall -std=c++11
+	LIB    := -lglfw3 -framework Cocoa -framework IOKit -framework CoreVideo
+endif
+ifeq ($(detected_os),Linux)
+	C      := gcc
+	CC     := g++
+	CFLAGS := -Wall -std=c++11 $(shell pkg-config --cflags glfw3)
+	LIB    := $(shell pkg-config --static --libs glfw3)
+endif
+
 TARGET      := demo
-
-#The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR      := src
 INCDIR      := include
 BUILDDIR    := obj
 TARGETDIR   := bin
-RESDIR      := res
+RESDIR      := data
 SRCEXT      := cpp
 DEPEXT      := d
 OBJEXT      := o
-
-#Flags, Libraries and Includes
-CFLAGS      := -Wall -std=c++11
-LIB         := -lglfw3 -framework Cocoa -framework IOKit -framework CoreVideo
 INC         := -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
-
-#---------------------------------------------------------------------------------
-#DO NOT EDIT BELOW THIS LINE
-#---------------------------------------------------------------------------------
 SOURCES     := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS     := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.$(OBJEXT))) $(BUILDDIR)/glad.o
 
 #Defauilt Make
-#all: resources $(TARGET)
+all: resources $(TARGET)
 all: directories $(TARGET)
 
 #Remake
 remake: cleaner all
 
 #Copy Resources from Resources Directory to Target Directory
-#resources: directories
-	#@cp $(RESDIR)/* $(TARGETDIR)/
+resources: directories
+	@cp -r $(RESDIR) $(TARGETDIR)/
 
 #Make the Directories
 directories:
@@ -68,7 +79,10 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 	@rm -f $(BUILDDIR)/$*.$(DEPEXT).tmp
 
 $(BUILDDIR)/glad.o:
-	clang -Iinclude -c $(SRCDIR)/glad.c -o $@ $<
+	$(C) -Iinclude -c $(SRCDIR)/glad.c -o $@ $<
 
 #Non-File Targets
 .PHONY: all remake clean cleaner resources
+
+
+
